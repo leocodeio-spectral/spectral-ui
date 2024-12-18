@@ -25,4 +25,10 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    hmr: {
+      overlay: true,
+    },
+  },
+  clearScreen: false,
 });
