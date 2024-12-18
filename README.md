@@ -1,1 +1,1 @@
-# main branch for deployment
+# Main branch for development
