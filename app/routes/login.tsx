@@ -1,4 +1,12 @@
-import { LoginForm } from "~/components/login-form"
+import { MetaFunction } from "@remix-run/cloudflare";
+import { LoginForm } from "~/components/login-form";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Spectral Login" },
+    { name: "description", content: "Login to Spectral" },
+  ];
+};
 
 export default function Login() {
   return (
@@ -7,5 +15,5 @@ export default function Login() {
         <LoginForm />
       </div>
     </div>
-  )
+  );
 }
