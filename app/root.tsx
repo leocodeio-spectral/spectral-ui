@@ -5,7 +5,8 @@ import {
   useTheme,
 } from "remix-themes";
 
-import { themeSessionResolver } from "./sessions.server";
+import { themeSessionResolver } from "./lib/sessions.server";
+
 import {
   LiveReload,
   Meta,
@@ -64,7 +65,6 @@ export function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
