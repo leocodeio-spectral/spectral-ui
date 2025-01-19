@@ -7,6 +7,7 @@ import {
   NavigationMenuLink,
 } from "~/components/ui/navigation-menu";
 import { ModeToggle } from "./mode-toggle";
+import { NavLinks } from "~/models/navlinks";
 
 export default function Header() {
   return (
@@ -26,21 +27,11 @@ export default function Header() {
             </Link>
           </Button>
           <div className="grid gap-2 py-6">
-            <Button variant="link" asChild>
-              <Link to="/">Home</Link>
-            </Button>
-            <Button variant="link" asChild>
-              <Link to="/">About</Link>
-            </Button>
-            <Button variant="link" asChild>
-              <Link to="/">Services</Link>
-            </Button>
-            <Button variant="link" asChild>
-              <Link to="/">Portfolio</Link>
-            </Button>
-            <Button variant="link" asChild>
-              <Link to="/">Contact</Link>
-            </Button>
+            {NavLinks.map((link, key) => (
+              <Button variant="link" asChild key={key}>
+                <Link to={link.to}>{link.name}</Link>
+              </Button>
+            ))}
           </div>
         </SheetContent>
       </Sheet>
@@ -52,51 +43,25 @@ export default function Header() {
       </Button>
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
-          <NavigationMenuLink asChild>
-            <Link
-              to="/"
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-            >
-              Home
-            </Link>
-          </NavigationMenuLink>
-          <NavigationMenuLink asChild>
-            <Link
-              to="/"
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-            >
-              About
-            </Link>
-          </NavigationMenuLink>
-          <NavigationMenuLink asChild>
-            <Link
-              to="/"
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-            >
-              Services
-            </Link>
-          </NavigationMenuLink>
-          <NavigationMenuLink asChild>
-            <Link
-              to="/"
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-            >
-              Portfolio
-            </Link>
-          </NavigationMenuLink>
-          <NavigationMenuLink asChild>
-            <Link
-              to="/"
-              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-            >
-              Contact
-            </Link>
-          </NavigationMenuLink>
+          {NavLinks.map((link, key) => (
+            <NavigationMenuLink asChild key={key}>
+              <Link
+                to={link.to}
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+              >
+                {link.name}
+              </Link>
+            </NavigationMenuLink>
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
       <div className="ml-auto flex gap-2">
-        <Button variant="outline">Sign in</Button>
-        <Button>Sign Up</Button>
+        <Button variant="outline" asChild>
+          <Link to="/auth/signin">Sign in</Link>
+        </Button>
+        <Button asChild>
+          <Link to="/auth/signup">Sign Up</Link>
+        </Button>
       </div>
       <ModeToggle />
     </header>
@@ -107,7 +72,7 @@ function MenuIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="htto://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -128,7 +93,7 @@ function ShirtIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns="htto://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
