@@ -5,7 +5,8 @@ import {
   useTheme,
 } from "remix-themes";
 
-import { themeSessionResolver } from "./sessions.server";
+import { themeSessionResolver } from "./lib/sessions.server";
+
 import {
   LiveReload,
   Meta,
