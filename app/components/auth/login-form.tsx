@@ -31,7 +31,9 @@ export function LoginForm({
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="m@example.com"
                   required
                 />
@@ -48,7 +50,9 @@ export function LoginForm({
                 </div>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
+                  autoComplete="current-password"
                   placeholder="password"
                   required
                 />

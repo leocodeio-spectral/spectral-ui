@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/cloudflare";
 import { Button } from "~/components/ui/button";
 import { ModeToggle } from "~/components/mode-toggle";
 import { Link } from "@remix-run/react";
-import Header from "~/components/header";
+import Header from "~/components/landing/header";
 
 export const meta: MetaFunction = () => {
   return [

@@ -1,4 +1,9 @@
-import { Sheet, SheetTrigger, SheetContent } from "~/components/ui/sheet";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetTitle,
+} from "~/components/ui/sheet";
 import { Button } from "~/components/ui/button";
 import { Link } from "@remix-run/react";
 import {
@@ -6,7 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuLink,
 } from "~/components/ui/navigation-menu";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../mode-toggle";
 import { NavLinks } from "~/models/navlinks";
 
 export default function Header() {
@@ -19,7 +24,11 @@ export default function Header() {
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left">
+        <SheetContent side="left" aria-describedby={undefined}>
+          <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+          <div id="navigation-sheet-description" className="sr-only">
+            Navigation menu for mobile devices
+          </div>
           <Button variant="link" asChild>
             <Link to="/">
               <ShirtIcon className="h-6 w-6" />

@@ -1,19 +1,13 @@
 import { MetaFunction } from "@remix-run/cloudflare";
-import { LoginForm } from "~/components/login-form";
+import { LoginForm } from "~/components/auth/login-form";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Spectral Login" },
-    { name: "description", content: "Login to Spectral" },
+    { title: "Spectral SignIn" },
+    { name: "description", content: "SignIn to Spectral" },
   ];
 };
 
 export default function Signin() {
-  return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <LoginForm />
-      </div>
-    </div>
-  );
+  return <LoginForm />;
 }
