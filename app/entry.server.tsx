@@ -8,8 +8,12 @@ import type { AppLoadContext, EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import Backend from "i18next-http-backend";
+import i18n from "./i18n";
+import i18next from "./lib/i18next.server";
+import { createInstance } from "i18next";
+import { I18nextProvider, initReactI18next } from "react-i18next";
 
-const ABORT_DELAY = 5000;
 
 export default async function handleRequest(
   request: Request,
@@ -21,36 +25,64 @@ export default async function handleRequest(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext
 ) {
+  let instance = createInstance();
+  let lng = await i18next.getLocale(request);
+  let ns = i18next.getRouteNamespaces(remixContext);
+
+  await instance
+    .use(initReactI18next)
+    .use(Backend)
+    .init({
+      ...i18n,
+      lng,
+      ns,
+      backend: {
+        loadPath: "/locales/{{lng}}/{{ns}}.json",
+      },
+      resources: {
+        en: {
+          common: {
+            greeting: "Hello",
+          },
+        },
+        es: {
+          common: {
+            greeting: "Hola",
+          },
+        },
+      },
+    });
+
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), ABORT_DELAY);
+  let didError = false;
 
   const body = await renderToReadableStream(
-    <RemixServer
-      context={remixContext}
-      url={request.url}
-      abortDelay={ABORT_DELAY}
-    />,
+    <I18nextProvider i18n={instance}>
+      <RemixServer context={remixContext} url={request.url} />
+    </I18nextProvider>,
     {
       signal: controller.signal,
       onError(error: unknown) {
-        if (!controller.signal.aborted) {
-          // Log streaming rendering errors from inside the shell
-          console.error(error);
-        }
+        didError = true;
+        console.error(error);
         responseStatusCode = 500;
       },
     }
   );
 
-  body.allReady.then(() => clearTimeout(timeoutId));
+  try {
+    if (isbot(request.headers.get("user-agent"))) {
+      await body.allReady;
+    }
 
-  if (isbot(request.headers.get("user-agent") || "")) {
-    await body.allReady;
+    responseHeaders.set("Content-Type", "text/html");
+    return new Response(body, {
+      status: didError ? 500 : responseStatusCode,
+      headers: responseHeaders,
+    });
+  } catch (error) {
+    controller.abort();
+    console.error(error);
+    return new Response("Internal Server Error", { status: 500 });
   }
-
-  responseHeaders.set("Content-Type", "text/html");
-  return new Response(body, {
-    headers: responseHeaders,
-    status: responseStatusCode,
-  });
 }
