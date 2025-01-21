@@ -6,7 +6,7 @@ import {
   NavigationMenuList,
   NavigationMenuLink,
 } from "~/components/ui/navigation-menu";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../mode-toggle";
 import { NavLinks } from "~/models/navlinks";
 
 export default function Header() {
