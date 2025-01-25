@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { MetaFunction } from "@remix-run/node";
 import Header from "~/components/landing/header";
 import { useTranslation } from "react-i18next";
 

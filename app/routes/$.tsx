@@ -8,7 +8,7 @@
 import { Link, useLoaderData, useLocation } from "@remix-run/react";
 import { GeneralErrorBoundary } from "~/components/error-boundary";
 import { Home, AlertCircle } from "lucide-react";
-import { json, LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
+import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Button } from "~/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import {

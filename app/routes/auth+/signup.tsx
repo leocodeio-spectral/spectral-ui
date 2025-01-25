@@ -1,4 +1,4 @@
-import { MetaFunction } from "@remix-run/cloudflare";
+import { MetaFunction } from "@remix-run/node";
 import { SignupForm } from "~/components/auth/signup-form";
 
 export const meta: MetaFunction = () => {

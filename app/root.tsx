@@ -16,7 +16,7 @@ import {
 } from "@remix-run/react";
 import { Links } from "@remix-run/react";
 import { Outlet } from "@remix-run/react";
-import { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
 // i18n
 
