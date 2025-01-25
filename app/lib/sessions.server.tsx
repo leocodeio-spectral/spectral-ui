@@ -46,3 +46,5 @@ export async function getI18nSession(request: Request) {
     commit: () => i18nSessionStorage.commitSession(session),
   };
 }
+
+// ------------------------------ user session storage ------------------------------
