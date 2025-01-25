@@ -1,6 +1,6 @@
 import { json, type ActionFunctionArgs } from "@remix-run/cloudflare";
 
-import { getI18nSession } from "~/lib/sessions.server";
+import { getI18nSession } from "~/services/sessions.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();

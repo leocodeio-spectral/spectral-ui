@@ -5,8 +5,8 @@ import {
   useTheme,
 } from "remix-themes";
 
-import { themeSessionResolver } from "./lib/sessions.server";
-import { getI18nSession } from "./lib/sessions.server";
+import { themeSessionResolver } from "./services/sessions.server";
+import { getI18nSession } from "./services/sessions.server";
 
 import {
   Meta,

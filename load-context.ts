@@ -1,3 +1,4 @@
+import { SessionStorage } from "@remix-run/cloudflare";
 import { type PlatformProxy } from "wrangler";
 
 // When using `wrangler.toml` to configure bindings,
@@ -6,12 +7,18 @@ import { type PlatformProxy } from "wrangler";
 // Need this empty interface so that typechecking passes
 // even if no `wrangler.toml` exists.
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Env {}
+interface Env {
+  SITEINFO: {
+    user_not_logged_in_path: string;
+  };
+}
 
 type Cloudflare = Omit<PlatformProxy<Env>, "dispose">;
 
 declare module "@remix-run/cloudflare" {
   interface AppLoadContext {
     cloudflare: Cloudflare;
+    getSessionStorage: () => SessionStorage;
+    env: Env;
   }
 }

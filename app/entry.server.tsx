@@ -13,7 +13,7 @@ import i18n from "./i18n";
 import i18next from "./lib/i18next.server";
 import { createInstance } from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
-import { getI18nSession } from "./lib/sessions.server";
+import { getI18nSession } from "./services/sessions.server";
 import { getLocaleResources } from "./functions/i18n.load-locales";
 
 export default async function handleRequest(
