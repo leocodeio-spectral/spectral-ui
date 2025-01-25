@@ -1,8 +1,6 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
-import { Button } from "~/components/ui/button";
-import { ModeToggle } from "~/components/mode-toggle";
-import { Link } from "@remix-run/react";
 import Header from "~/components/landing/header";
+import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,15 +10,12 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+  const { t } = useTranslation();
+
   return (
     <div className="flex h-screen items-center justify-center">
       <Header />
-      {/* <Button variant="link" asChild>
-        <Link to="/login">Login</Link>
-      </Button>
-      <ModeToggle /> */}
-      <h1 className="text-4xl font-bold">Welcome to Spectral</h1>
+      <h1 className="text-4xl font-bold">{t("welcome")}</h1>
     </div>
   );
 }
-

@@ -6,6 +6,7 @@ import {
 } from "remix-themes";
 
 import { themeSessionResolver } from "./lib/sessions.server";
+import { getI18nSession } from "./lib/sessions.server";
 
 import {
   Meta,
@@ -32,9 +33,10 @@ export let handle = {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   //-------------------------- i18n---------------------------------------
-  let locale = await i18next.getLocale(request);
-  //-------------------------- i18n---------------------------------------
+  const i18nSession = await getI18nSession(request);
+  let locale = i18nSession.getLocale();
   const { getTheme } = await themeSessionResolver(request);
+  //-------------------------- i18n---------------------------------------
   return {
     theme: getTheme(),
     locale,
@@ -53,7 +55,6 @@ export default function AppWithProviders() {
 import "./tailwind.css";
 
 //-------------------------- i18n---------------------------------------
-import i18next from "./lib/i18next.server";
 import { useTranslation } from "react-i18next";
 //-------------------------- i18n---------------------------------------
 export const links: LinksFunction = () => [

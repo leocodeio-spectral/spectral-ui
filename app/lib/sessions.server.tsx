@@ -1,10 +1,11 @@
-import { createCookieSessionStorage } from "@remix-run/cloudflare"
-import { createThemeSessionResolver } from "remix-themes"
+import { createCookieSessionStorage } from "@remix-run/cloudflare";
+import { createThemeSessionResolver } from "remix-themes";
 
 // You can default to 'development' if process.env.NODE_ENV is not set
-const isProduction = process.env.NODE_ENV === "production"
+const isProduction = process.env.NODE_ENV === "production";
 
-const sessionStorage = createCookieSessionStorage({
+// ------------------------------ theme session storage ------------------------------
+const themeSessionStorage = createCookieSessionStorage({
   cookie: {
     name: "theme",
     path: "/",
@@ -16,6 +17,32 @@ const sessionStorage = createCookieSessionStorage({
       ? { domain: "your-production-domain.com", secure: true }
       : {}),
   },
-})
+});
 
-export const themeSessionResolver = createThemeSessionResolver(sessionStorage)
+export const themeSessionResolver =
+  createThemeSessionResolver(themeSessionStorage);
+
+// ------------------------------ i18n session storage ------------------------------
+const i18nSessionStorage = createCookieSessionStorage({
+  cookie: {
+    name: "i18n",
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    secrets: ["s3cr3t"],
+    ...(isProduction
+      ? { domain: "your-production-domain.com", secure: true }
+      : {}),
+  },
+});
+
+export async function getI18nSession(request: Request) {
+  const session = await i18nSessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+  return {
+    getLocale: () => session.get("locale") || "en",
+    setLocale: (locale: string) => session.set("locale", locale),
+    commit: () => i18nSessionStorage.commitSession(session),
+  };
+}

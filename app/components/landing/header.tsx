@@ -13,8 +13,28 @@ import {
 } from "~/components/ui/navigation-menu";
 import { ModeToggle } from "../mode-toggle";
 import { NavLinks } from "~/models/navlinks";
+import { useFetcher } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "~/components/ui/select";
 
 export default function Header() {
+  const { i18n } = useTranslation();
+  const fetcher = useFetcher();
+
+  const handleLanguageChange = (value: string) => {
+    fetcher.submit(
+      { locale: value },
+      { method: "POST", action: "/action/set-language" }
+    );
+    i18n.changeLanguage(value);
+  };
+
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 fixed top-0 left-0 right-0   ">
       <Sheet>
@@ -65,6 +85,18 @@ export default function Header() {
         </NavigationMenuList>
       </NavigationMenu>
       <div className="ml-auto flex gap-2">
+        <Select
+          onValueChange={handleLanguageChange}
+          defaultValue={i18n.language}
+        >
+          <SelectTrigger className="w-[100px]">
+            <SelectValue placeholder="Language" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="en">English</SelectItem>
+            <SelectItem value="es">Español</SelectItem>
+          </SelectContent>
+        </Select>
         <Button variant="outline" asChild>
           <Link to="/auth/signin">Sign in</Link>
         </Button>
