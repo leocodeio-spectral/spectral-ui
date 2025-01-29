@@ -9,7 +9,7 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 
 export function LoginForm({
   className,
@@ -25,7 +25,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action="/action/auth/signin" method="post">
+          <Form method="post">
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -70,7 +70,7 @@ export function LoginForm({
                 Sign up
               </Link>
             </div>
-          </form>
+          </Form>
         </CardContent>
       </Card>
     </div>

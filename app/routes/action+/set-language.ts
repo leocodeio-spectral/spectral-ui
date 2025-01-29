@@ -17,7 +17,7 @@ export async function action({ request }: ActionFunctionArgs) {
     { success: true, locale },
     {
       headers: {
-        "Set-Cookie": await i18nSession.commit(),
+        "Set-Cookie": await i18nSession.commitI18nSession(),
       },
     }
   );

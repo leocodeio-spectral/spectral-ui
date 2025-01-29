@@ -37,10 +37,7 @@ export function ErrorBoundary() {
           <div className="container flex h-screen items-center justify-center">
             <Card className="w-full max-w-md">
               <CardHeader>
-                <Alert
-                  variant="destructive"
-                  className="flex flex-col gap-2 items-center p-6"
-                >
+                <Alert className="flex flex-col gap-2 p-6">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>404 Error</AlertTitle>
                   <AlertDescription>Page not found</AlertDescription>
