@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { NavLinks } from "@/models/navlinks";
+import { useTranslation } from "react-i18next";
 import {
   Select,
   SelectTrigger,
@@ -22,6 +23,12 @@ import {
 } from "@/components/ui/select";
 
 export default function Header() {
+  const { i18n } = useTranslation();
+
+  const handleLanguageChange = (value: string) => {
+    i18n.changeLanguage(value);
+  };
+
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 fixed top-0 left-0 right-0   ">
       <Sheet>
@@ -72,7 +79,7 @@ export default function Header() {
         </NavigationMenuList>
       </NavigationMenu>
       <div className="ml-auto flex gap-2">
-        {/* <Select
+        <Select
           onValueChange={handleLanguageChange}
           defaultValue={i18n.language}
         >
@@ -83,7 +90,7 @@ export default function Header() {
             <SelectItem value="en">English</SelectItem>
             <SelectItem value="es">Español</SelectItem>
           </SelectContent>
-        </Select> */}
+        </Select>
         <Button variant="outline" asChild>
           <Link to="/auth/signin">Sign in</Link>
         </Button>
