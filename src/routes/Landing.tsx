@@ -1,13 +1,12 @@
-import { Banner } from "@/components/common/banner";
+import Header from "@/components/landing/header";
 
 export default function Landing() {
   //   const { t } = useTranslation();
 
   return (
     <div className="flex h-screen items-center justify-center">
-      {/* <Header /> */}
+      <Header />
       {/* <h1 className="text-4xl font-bold">{t("welcome")}</h1> */}
-      <Banner />
     </div>
   );
 }
