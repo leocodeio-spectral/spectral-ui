@@ -29,6 +29,7 @@ export default async function handleRequest(
   let instance = createInstance();
   let { getLocale } = await getI18nSession(request);
   let lng = getLocale();
+  // @ts-ignore
   let ns = i18next.getRouteNamespaces(remixContext);
 
   // Get all locale resources dynamically
