@@ -85,5 +85,6 @@
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
-  }
+  },
+  "version": "1.0.0"
 }
