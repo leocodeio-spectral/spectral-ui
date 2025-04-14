@@ -1,43 +1,101 @@
-import { signupPayloadSchema } from "~/services/schemas/signup.schema";
-import { signinPayloadSchema } from "~/services/schemas/signin.schema";
-import { SignupPayload, SigninPayload } from "~/types/user";
+import { SignupPayload, SigninPayload } from "@/types/user";
 import { userSession } from "./sessions.server";
 
 // start ------------------------------ signup ------------------------------
 export const signup = async (signupPayload: SignupPayload) => {
-  const { email, password, confirmPassword } = signupPayloadSchema.parse(
-    signupPayload
-  );
+  try {
+    const { role, confirmPassword, ...signupPayloadWithoutRole } =
+      signupPayload;
+    console.log(signupPayloadWithoutRole);
+    const signupUri =
+      role === "initiator"
+        ? `${process.env.VITE_APP_INITIATOR_BACKEND_USER_URL}/signup`
+        : `${process.env.VITE_APP_PARTICIPANT_BACKEND_USER_URL}/signup`;
+    console.log(signupUri);
+    const signupResponse = await fetch(signupUri, {
+      method: "POST",
+      body: JSON.stringify(signupPayloadWithoutRole),
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.VITE_APP_API_KEY!,
+      },
+      credentials: "include",
+      mode: "cors",
+    });
 
-  if (password !== confirmPassword) {
-    return new Error("password and confirm password do not match");
+    return signupResponse;
+  } catch (error) {
+    console.error("Auth signup error - auth.server.tsx", error);
+    throw new Error("Backend Server did not respond correctly");
   }
-
-  // signup to save user
-  // create user in database
-  // create session
-
-  return {
-    user: {
-      id: "1",
-      email,
-      name: "John Doe",
-    },
-  };
 };
 // end ------------------------------ signup ------------------------------
 // start ------------------------------ signin ------------------------------
 
 export const signin = async (signinPayload: SigninPayload) => {
-  const { email, password } = signinPayloadSchema.parse(signinPayload);
-  // get user from storage
-
-  return {
-    user: {
-      id: "1",
-      email,
-      name: "John Doe",
-    },
-  };
+  try {
+    const { role, ...signinPayloadWithoutRole } = signinPayload;
+    const signinUri =
+      role === "initiator"
+        ? `${process.env.VITE_APP_INITIATOR_BACKEND_USER_URL}/signin`
+        : `${process.env.VITE_APP_PARTICIPANT_BACKEND_USER_URL}/signin`;
+    const signinResponse = await fetch(signinUri, {
+      method: "POST",
+      body: JSON.stringify(signinPayloadWithoutRole),
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.VITE_APP_API_KEY!,
+      },
+      credentials: "include",
+      mode: "cors",
+    });
+    return signinResponse;
+  } catch (error) {
+    console.error("Auth signin error - auth.server.tsx", error);
+    throw new Error("Backend Server did not respond correctly");
+  }
 };
 // end ------------------------------ signin ------------------------------
+// start ------------------------------ logout ------------------------------
+export const logout = async (role: string, request: Request) => {
+  const session = await userSession(request);
+  const { accessToken, refreshToken } = session.getAcessAndRefreshToken();
+  const logoutUri =
+    role === "initiator"
+      ? `${process.env.VITE_APP_INITIATOR_BACKEND_USER_URL}/signout`
+      : `${process.env.VITE_APP_PARTICIPANT_BACKEND_USER_URL}/signout`;
+  const logoutResponse = await fetch(logoutUri, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.VITE_APP_API_KEY!,
+      Cookie: `access-token=${accessToken}; refresh-token=${refreshToken};`,
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+  return logoutResponse;
+};
+// end ------------------------------ logout ------------------------------
+// start ------------------------------ me ------------------------------
+export const me = async (role: string, request: Request) => {
+  const session = await userSession(request);
+  const { accessToken, refreshToken } = session.getAcessAndRefreshToken();
+  const meUri =
+    role === "initiator"
+      ? `${process.env.VITE_APP_INITIATOR_BACKEND_USER_URL}/profile`
+      : `${process.env.VITE_APP_PARTICIPANT_BACKEND_USER_URL}/profile`;
+  const meResponse = await fetch(meUri, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.VITE_APP_API_KEY!,
+      Cookie: `access-token=${accessToken}; refresh-token=${refreshToken};`,
+    },
+    credentials: "include",
+    mode: "cors",
+  });
+  console.log("meResponse", meResponse);
+  return meResponse;
+};
+// end ------------------------------ me ------------------------------
