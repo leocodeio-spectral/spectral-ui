@@ -1,4 +1,4 @@
-import { createCookie, createCookieSessionStorage } from "@remix-run/node";
+import { createCookieSessionStorage } from "@remix-run/node";
 import { createThemeSessionResolver } from "remix-themes";
 import { jwtDecode } from "jwt-decode";
 
