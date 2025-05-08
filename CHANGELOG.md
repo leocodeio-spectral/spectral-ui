@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.0.1...v1.0.2) (2025-05-08)
+
+
+### Performance Improvements
+
+* **plan:** plan ([9ebaec2](https://github.com/leocodeio-spectral/spectral-ui/commit/9ebaec2abb57dc8e8395b0783ecb102d02126f0d))
+
 ## [1.0.1](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.0.0...v1.0.1) (2025-04-14)
 
 
