@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.2.0...v1.3.0) (2025-05-10)
+
+
+### Features
+
+* **udpated code signup flow end - to - end:** udpated code signup flow end - to - end ([4458cf0](https://github.com/leocodeio-spectral/spectral-ui/commit/4458cf01620ada1b2c5049708477e5f56ab636b9))
+
 # [1.2.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.1.0...v1.2.0) (2025-05-10)
 
 
