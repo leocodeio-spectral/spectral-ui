@@ -55,6 +55,18 @@ export async function action({ request }: ActionFunctionArgs) {
       };
       return Response.json(result, { status: 400 });
     }
+
+    // if user exists, return error
+    if (userExistsResult.data?.data) {
+      const result: ActionResultError<any> = {
+        success: false,
+        origin: "email",
+        message: "User already exists",
+        data: null,
+      };
+      return Response.json(result, { status: 400 });
+    }
+
     // phone exists check
     const phoneExistsPayload = {
       identifier: data.phone,
@@ -86,6 +98,19 @@ export async function action({ request }: ActionFunctionArgs) {
       };
       return Response.json(result, { status: 400 });
     }
+
+    // if phone exists, return error
+    if (phoneExistsResult.data?.data) {
+      const result: ActionResultError<any> = {
+        success: false,
+        origin: "phone",
+        message: "User already exists",
+        data: null,
+      };
+      return Response.json(result, { status: 400 });
+    }
+
+    // send otp to email
     const otpPayload = {
       email: data.email,
       name: data.name,
@@ -156,7 +181,7 @@ export async function action({ request }: ActionFunctionArgs) {
       return Response.json(result, { status: 400 });
     }
     console.log("4");
-    
+
     const signupResult = await signup(parsedSignupPayload.data, request);
     console.log("3");
     const session = await userSession(request);
@@ -169,7 +194,7 @@ export async function action({ request }: ActionFunctionArgs) {
     const result: ActionResultSuccess<User> = {
       success: true,
       origin: "email" as ORIGIN,
-      message: "Signin successful",
+      message: "Signup successful",
       data: null,
     };
     return Response.json(result, {

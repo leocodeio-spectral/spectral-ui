@@ -49,8 +49,8 @@ export async function action({ request }: ActionFunctionArgs) {
 
       const session = await userSession(request);
       session.setUser(
-        signinResult.data.access_token,
-        signinResult.data.refresh_token
+        signinResult?.data?.access_token,
+        signinResult?.data?.refresh_token
       );
 
       const result: ActionResultSuccess<User> = {

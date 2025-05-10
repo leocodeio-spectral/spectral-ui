@@ -49,7 +49,7 @@ export default function Signin() {
 
   useEffect(() => {
     if (actionData?.success) {
-      if (actionData.origin === "email") {
+      if (actionData.origin === "email" && actionData.message === "OTP sent") {
         setVerificationStep("otp");
       } else {
         toast({

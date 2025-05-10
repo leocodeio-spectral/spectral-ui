@@ -11,7 +11,7 @@ const authEndpoints = {
 export const isUserExists = async (
   userExistsPayload: UserExistsPayload,
   request: Request
-): Promise<ActionResult<UserExistsPayload>> => {
+): Promise<ActionResult<any>> => {
   const response = await makeApiRequest(
     `/${userExistsPayload.role}${authEndpoints.isExists}`,
     {

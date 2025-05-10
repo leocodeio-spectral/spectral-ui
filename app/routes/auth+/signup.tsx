@@ -40,7 +40,6 @@ export default function Signup() {
   );
   const [role, setRole] = useState("editor");
   const [otp, setOtp] = useState("");
-  const [otpResendTime, setOtpResendTime] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const [verificationStep, setVerificationStep] = useState<"details" | "otp">(

@@ -3,7 +3,7 @@ import { signinPayloadSchema } from "~/services/schemas/signin.schema";
 import { SignupPayload, SigninPayload } from "~/types/user";
 
 import { makeApiRequest } from "./common.server";
-import { ActionResult } from "~/types/action-result";
+import { ActionResult, ActionResultError, ORIGIN } from "~/types/action-result";
 
 const authEndpoints = {
   // common
@@ -24,7 +24,7 @@ const authEndpoints = {
 export const signup = async (
   signupPayload: SignupPayload,
   request: Request
-) => {
+): Promise<ActionResult<any>> => {
   const { role, name, confirmPassword, ...rest } =
     signupPayloadSchema.parse(signupPayload);
 
@@ -84,12 +84,34 @@ export const signup = async (
   }
 
   // [TODO-1] parse and return data in action result format
-  return await response.json();
+  // return await response.json();
   // If the execution reaches here, it means the signup was successful
 
   // create standard signin and return the response
-  // const signinResult = await signin(signupPayload, request);
-  // return signinResult;
+  console.log("SIGNUP sucess");
+  const signinPayload = {
+    identifier: signupPayload.email,
+    type: "email" as "email" | "mobile",
+    password: signupPayload.password,
+    role: signupPayload.role,
+  } as SigninPayload;
+  console.log("signinPayload", signinPayload);
+  const parsedSigninPayload = signinPayloadSchema.safeParse(signinPayload);
+
+  if (!parsedSigninPayload.success) {
+    const result: ActionResultError<any> = {
+      success: false,
+      origin: parsedSigninPayload.error.issues[0].path[0] as ORIGIN,
+      message: parsedSigninPayload.error.issues[0].message,
+      data: parsedSigninPayload.data,
+    };
+    return result;
+  }
+
+  const signinResult = await signin(parsedSigninPayload.data, request);
+
+  console.log("signinResult", signinResult);
+  return signinResult.data;
 };
 // end ------------------------------ signup ----------------------------
 // start ---------------------------- signin ----------------------------
@@ -97,7 +119,7 @@ export const signup = async (
 export const signin = async (
   signinPayload: SigninPayload,
   request: Request
-) => {
+): Promise<ActionResult<any>> => {
   const { role, identifier, password } =
     signinPayloadSchema.parse(signinPayload);
 
@@ -134,7 +156,7 @@ export const signin = async (
         message: "Invalid password",
         data: signinPayload,
       };
-      return Response.json(result, { status: 401 });
+      return result;
     }
     // 409
     else if (response.status === 409) {
@@ -157,7 +179,14 @@ export const signin = async (
   }
 
   // [TODO-2] parse and return data in action result format
-  return await response.json();
+  // return await response.json();
+  const result: ActionResult<SigninPayload> = {
+    success: true,
+    origin: "email",
+    message: "Signin successful",
+    data: await response.json(),
+  };
+  return result;
 };
 // end ------------------------------ signin ------------------------------
 // start ------------------------------ logout ------------------------------
