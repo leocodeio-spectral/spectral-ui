@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.1.0...v1.2.0) (2025-05-10)
+
+
+### Features
+
+* **signin sucess have to manage things:** signin sucess have to manage things ([62ef4db](https://github.com/leocodeio-spectral/spectral-ui/commit/62ef4db4bd2e766739289f7835623e54dc14577e))
+
 # [1.1.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.0.2...v1.1.0) (2025-05-10)
 
 
