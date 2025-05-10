@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.0.2...v1.1.0) (2025-05-10)
+
+
+### Features
+
+* **creator amd editor signup complete:** creator amd editor signup complete ([11e6f67](https://github.com/leocodeio-spectral/spectral-ui/commit/11e6f671bff868306304a0f2588e7d7643605c97))
+
 ## [1.0.2](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.0.1...v1.0.2) (2025-05-08)
 
 
