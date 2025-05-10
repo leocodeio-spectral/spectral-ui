@@ -98,17 +98,19 @@ export const signin = async (
   signinPayload: SigninPayload,
   request: Request
 ) => {
-  const { role, email, password } = signinPayloadSchema.parse(signinPayload);
+  const { role, identifier, password } =
+    signinPayloadSchema.parse(signinPayload);
 
   const response = await makeApiRequest<
     any,
-    { email: string; password: string }
-  >(`${role}/${authEndpoints.signin}`, {
+    { identifier: string; password: string; channel: string }
+  >(`/${role}${authEndpoints.signin}`, {
     method: "POST",
     request,
     body: {
-      email,
+      identifier,
       password,
+      channel: "web",
     },
   });
 

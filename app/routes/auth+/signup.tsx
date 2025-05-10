@@ -308,7 +308,6 @@ export default function Signup() {
                     </p>
                   </div>
                   <OTPInput
-                    email={email}
                     otp={otp}
                     onOTPChange={setOtp}
                     error={error?.type === "otp" ? error.message : ""}
