@@ -31,76 +31,18 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   // signin
-  const signinResult = await signin(parsedSigninPayload.data);
-  console.log("debug log 0 - signin.action.ts", signinResult);
+  const signinResult = await signin(parsedSigninPayload.data, request);
 
-  if (!signinResult.ok) {
-    // 404
-    if (signinResult.status === 404) {
-      // user with email not found
-      const result: ActionResultError<SigninPayload> = {
-        success: false,
-        origin: "email",
-        message: "User not found",
-        data: parsedSigninPayload.data,
-      };
-      return Response.json(result, { status: 401 });
-    }
-    // 401
-    else if (signinResult.status === 401) {
-      const result: ActionResultError<SigninPayload> = {
-        success: false,
-        origin: "password",
-        message: "Invalid password",
-        data: parsedSigninPayload.data,
-      };
-      return Response.json(result, { status: 401 });
-    }
-    // 409
-    else if (signinResult.status === 409) {
-      const result: ActionResultError<SigninPayload> = {
-        success: false,
-        origin: "email",
-        message: "User not found",
-        data: parsedSigninPayload.data,
-      };
-      return Response.json(result, { status: 409 });
-    } else {
-      const result: ActionResultError<SigninPayload> = {
-        success: false,
-        origin: "email",
-        message: "Failed to signin",
-        data: parsedSigninPayload.data,
-      };
-      return Response.json(result, { status: 500 });
-    }
-  }
-
-  // we will get a access token and refresh token in the response
-  // we will set the access token in the cookie
-  // we will set the refresh token in the cookie
-  // we will redirect to the home page
-  const cookies = signinResult.headers
-    .get("set-cookie")
-    ?.split(",") as string[];
-  console.log("debug log 0 - signin.action.ts", cookies);
-  if (cookies.length !== 4) {
-    const result: ActionResultError<SigninPayload> = {
-      success: false,
-      origin: "email",
-      message: "Failed to signin",
-      data: parsedSigninPayload.data,
-    };
-    return Response.json(result, { status: 500 });
-  }
-  const signinData = await signinResult.json();
-  console.log("debug log 1 - signin.action.ts", signinData);
   const session = await userSession(request);
   console.log("debug log 2 - signin.action.ts", session);
-  session.setUser(cookies[0] + "," + cookies[1], cookies[2] + "," + cookies[3]);
+  session.setUser(
+    signinResult?.data?.access_token,
+    signinResult?.data?.refresh_token
+  );
   console.log("debug log 3 - signin.action.ts", session.getUser());
   const result: ActionResultSuccess<User> = {
     success: true,
+    origin: "email",
     message: "Signin successful",
     data: null,
   };

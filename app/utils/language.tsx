@@ -5,3 +5,5 @@ export const language = {
   ja: "Japanese",
   zh: "Chinese",
 };
+
+export const languageOptions = ["en", "es", "hi", "ja", "zh"];

@@ -1,14 +1,13 @@
 export type ORIGIN =
   | "email"
+  | "phone"
   | "password"
-  | "topics"
-  | "respond"
   | "role"
-  | "source"
-  | "companyName";
+  | "otp";
 
 export type ActionResultSuccess<T> = {
   success: true;
+  origin: ORIGIN;
   message: string;
   data: T | null;
 };

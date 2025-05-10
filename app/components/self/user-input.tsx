@@ -21,6 +21,7 @@ const UserInput = ({
   autoComplete,
   placeholder,
   required,
+  disabled,
 }: {
   id: string;
   className?: string;
@@ -32,6 +33,7 @@ const UserInput = ({
   autoComplete?: string;
   placeholder?: string;
   required?: boolean;
+  disabled?: boolean;
 }) => (
   <div className={cn("grid gap-2", className)}>
     <Label htmlFor={id}>{label}</Label>
@@ -45,6 +47,7 @@ const UserInput = ({
       value={value}
       onChange={onChange}
       className={cn(error && "border-error")}
+      disabled={disabled}
     />
     {error && <p className="text-sm text-error">{error}</p>}
   </div>
