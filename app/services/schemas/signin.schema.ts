@@ -29,3 +29,16 @@ export const signinPayloadSchema = z
       path: ["identifier"],
     }
   );
+
+export const mailOtpLoginPayloadSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(1),
+  role: z.enum(["creator", "editor"]),
+});
+
+export const mailOtpLoginVerifyPayloadSchema = z.object({
+  email: z.string().email(),
+  otp: z.string().min(6).max(6),
+  name: z.string().min(1),
+  role: z.enum(["creator", "editor"]),
+});

@@ -1,6 +1,15 @@
 import { signupPayloadSchema } from "~/services/schemas/signup.schema";
-import { signinPayloadSchema } from "~/services/schemas/signin.schema";
-import { SignupPayload, SigninPayload } from "~/types/user";
+import {
+  mailOtpLoginPayloadSchema,
+  mailOtpLoginVerifyPayloadSchema,
+  signinPayloadSchema,
+} from "~/services/schemas/signin.schema";
+import {
+  SignupPayload,
+  SigninPayload,
+  MailOtpLoginPayload,
+  MailOtpLoginVerifyPayload,
+} from "~/types/user";
 
 import { makeApiRequest } from "./common.server";
 import { ActionResult, ActionResultError, ORIGIN } from "~/types/action-result";
@@ -115,7 +124,6 @@ export const signup = async (
 };
 // end ------------------------------ signup ----------------------------
 // start ---------------------------- signin ----------------------------
-
 export const signin = async (
   signinPayload: SigninPayload,
   request: Request
@@ -209,3 +217,79 @@ export const logout = async (role: string, request: Request) => {
   };
 };
 // end ------------------------------ logout ------------------------------
+// start ------------------------------ mail login ------------------------------
+export const mailLogin = async (
+  mailLoginPayload: MailOtpLoginPayload,
+  request: Request
+): Promise<ActionResult<any>> => {
+  const { role, email, name } =
+    mailOtpLoginPayloadSchema.parse(mailLoginPayload);
+  const response = await makeApiRequest(`/${role}${authEndpoints.mailLogin}`, {
+    method: "POST",
+    request,
+    body: {
+      mail: email,
+      name,
+      channel: "mobile",
+      userAgent: request.headers.get("User-Agent"),
+    },
+  });
+
+  if (!response.ok) {
+    return {
+      success: false,
+      origin: "email",
+      message: "Failed to send mail otp",
+      data: null,
+    };
+  }
+
+  return {
+    success: true,
+    origin: "email",
+    message: "Mail otp sent successfully",
+    data: null,
+  };
+};
+// end ------------------------------ mail login ------------------------------
+// start ------------------------------ mail login verify ------------------------------
+export const mailLoginVerify = async (
+  mailLoginVerifyPayload: MailOtpLoginVerifyPayload,
+  request: Request
+): Promise<ActionResult<any>> => {
+  const { role, email, name, otp } = mailOtpLoginVerifyPayloadSchema.parse(
+    mailLoginVerifyPayload
+  );
+
+  const response = await makeApiRequest(
+    `/${role}${authEndpoints.mailLoginVerify}`,
+    {
+      method: "POST",
+      request,
+      body: {
+        mail: email,
+        otp,
+        name,
+        channel: "mobile",
+        userAgent: request.headers.get("User-Agent"),
+      },
+    }
+  );
+
+  if (!response.ok) {
+    return {
+      success: false,
+      origin: "email",
+      message: "Failed to verify mail otp",
+      data: null,
+    };
+  }
+
+  return {
+    success: true,
+    origin: "email",
+    message: "Mail otp verified successfully",
+    data: await response.json(),
+  };
+};
+// end ------------------------------ mail login verify ------------------------------

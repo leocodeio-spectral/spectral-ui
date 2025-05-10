@@ -164,12 +164,10 @@ export async function action({ request }: ActionFunctionArgs) {
       timezone: "Asia/Kolkata",
       mailVerificationCode: data.otp,
     } as SignupPayload;
-    console.log("1");
     console.log(signupPayload);
 
     // parse with zod
     const parsedSignupPayload = signupPayloadSchema.safeParse(signupPayload);
-    console.log("2");
     console.log(parsedSignupPayload);
     if (!parsedSignupPayload.success) {
       const result: ActionResultError<any> = {
@@ -180,17 +178,13 @@ export async function action({ request }: ActionFunctionArgs) {
       };
       return Response.json(result, { status: 400 });
     }
-    console.log("4");
 
     const signupResult = await signup(parsedSignupPayload.data, request);
-    console.log("3");
     const session = await userSession(request);
-    console.log("debug log 2 - signin.action.ts", session);
     session.setUser(
       signupResult?.data?.access_token,
       signupResult?.data?.refresh_token
     );
-    console.log("debug log 3 - signin.action.ts", session.getUser());
     const result: ActionResultSuccess<User> = {
       success: true,
       origin: "email" as ORIGIN,

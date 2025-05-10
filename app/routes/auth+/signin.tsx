@@ -51,6 +51,7 @@ export default function Signin() {
     if (actionData?.success) {
       if (actionData.origin === "email" && actionData.message === "OTP sent") {
         setVerificationStep("otp");
+        setIsLoading(false);
       } else {
         toast({
           title: "Signin",
@@ -60,6 +61,7 @@ export default function Signin() {
         navigate("/");
       }
     } else if (actionData?.success === false) {
+      setIsLoading(false);
       // origin email
       if (actionData.origin === "email") {
         setError({ type: "email", message: actionData.message });
@@ -76,6 +78,11 @@ export default function Signin() {
     }
   }, [actionData, navigate]);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    setIsLoading(true);
+    setError(null);
+  };
+
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
@@ -88,7 +95,7 @@ export default function Signin() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form method="post" onSubmit={() => setIsLoading(true)}>
+          <Form method="post" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               {verificationStep === "details" ? (
                 <>
@@ -129,6 +136,8 @@ export default function Signin() {
                     onValueChange={(value: string) => {
                       if (value) {
                         setLoginMethod(value);
+                        // Clear errors when switching methods
+                        setError(null);
                       }
                     }}
                   >
@@ -183,8 +192,10 @@ export default function Signin() {
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : loginMethod === "password" ? (
+                      "Sign In"
                     ) : (
-                      "Continue"
+                      "Send OTP"
                     )}
                   </Button>
                 </>
@@ -202,8 +213,8 @@ export default function Signin() {
                       value={email}
                       disabled={true}
                     />
-                    <p className="text-sm text-muted-foreground text-red-300">
-                      OTP sent to email
+                    <p className="text-sm text-muted-foreground text-green-500">
+                      OTP sent to your email
                     </p>
                   </div>
 
@@ -214,22 +225,33 @@ export default function Signin() {
                   />
 
                   <div className="flex items-center gap-2">
-                    <Timer />
-                    <p>
-                      OTP will be valid for 60 seconds, go back to details to
-                      resend OTP
+                    <Timer className="text-amber-500" />
+                    <p className="text-sm text-muted-foreground">
+                      OTP will be valid for 60 seconds
                     </p>
                   </div>
 
-                  <Button type="submit" className="w-full">
-                    Verify & Sign In
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isLoading || otp.length < 6}
+                  >
+                    {isLoading ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      "Verify & Sign In"
+                    )}
                   </Button>
 
                   <Button
                     type="button"
                     variant="outline"
                     className="w-full"
-                    onClick={() => setVerificationStep("details")}
+                    onClick={() => {
+                      setVerificationStep("details");
+                      setOtp("");
+                      setError(null);
+                    }}
                   >
                     Back to Details
                   </Button>
@@ -245,15 +267,28 @@ export default function Signin() {
 
             {/* Hidden form fields */}
             <input type="hidden" name="role" value={role || "editor"} />
-            <input type="hidden" name="loginMethod" value={loginMethod} />
+
+            {/* Send verificationStep based on current state */}
             <input
               type="hidden"
               name="verificationStep"
-              value={verificationStep}
+              value={
+                verificationStep === "details"
+                  ? loginMethod === "password"
+                    ? "password"
+                    : "otp"
+                  : "verify"
+              }
             />
+
             <input type="hidden" name="email" value={email} />
+
             {loginMethod === "password" && (
               <input type="hidden" name="password" value={password} />
+            )}
+
+            {verificationStep === "otp" && (
+              <input type="hidden" name="otp" value={otp} />
             )}
 
             {/* toggle signup link */}
