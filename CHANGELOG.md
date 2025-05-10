@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.3.0...v1.4.0) (2025-05-10)
+
+
+### Features
+
+* **sign in with mail otp done:** sign in with mail otp done ([22c5436](https://github.com/leocodeio-spectral/spectral-ui/commit/22c5436063f21b4b1bf9c3e745a913c9da1f580e))
+
 # [1.3.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.2.0...v1.3.0) (2025-05-10)
 
 
