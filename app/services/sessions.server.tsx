@@ -86,8 +86,10 @@ export async function userSession(request: Request) {
       const role = session.get("role");
       if (accessToken && role) {
         const result = await validateAccessToken(role, accessToken, request);
-        console.log("result", result);
-        return result.data.valid;
+        if (result.success) {
+          return result.data.valid;
+        }
+        return false;
       }
       return false;
     },

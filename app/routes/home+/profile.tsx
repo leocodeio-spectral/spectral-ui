@@ -20,7 +20,7 @@ import { me } from "@/services/auth.server";
 
 export async function loader({ request }: any) {
   const session = await userSession(request);
-  const isAuthenticated = await  session.isAuthenticated();
+  const isAuthenticated = await session.isAuthenticated();
   console.log("---1---start home/profile.ts", isAuthenticated);
   if (!isAuthenticated) {
     return redirect("/auth/signin");
@@ -32,17 +32,19 @@ export async function loader({ request }: any) {
   }
   // Get user details from the me endpoint
   const meResponse = await me(role, request);
-  if (!meResponse.ok) {
+  if (!meResponse.success) {
     return redirect("/auth/signin");
   }
   console.log("---3---start home/profile.ts", meResponse);
-  const userData = await meResponse.json();
-  return { user: userData.payload };
+  const userData = meResponse.data;
+  return { user: userData };
 }
 
 export default function Profile() {
   const { user } = useLoaderData<typeof loader>();
-  const [name, setName] = useState(user?.name || "");
+  const [name, setName] = useState(
+    user?.firstName + " " + user?.lastName || ""
+  );
   const [email, setEmail] = useState(user?.email || "");
 
   return (
@@ -77,6 +79,7 @@ export default function Profile() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your name"
+                  disabled={true}
                 />
               </div>
               <div className="grid gap-2">

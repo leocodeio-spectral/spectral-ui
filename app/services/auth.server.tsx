@@ -13,6 +13,7 @@ import {
 
 import { makeApiRequest } from "./common.server";
 import { ActionResult, ActionResultError, ORIGIN } from "~/types/action-result";
+import { userSession } from "./sessions.server";
 
 const authEndpoints = {
   // common
@@ -199,9 +200,14 @@ export const signin = async (
 // end ------------------------------ signin ------------------------------
 // start ------------------------------ logout ------------------------------
 export const logout = async (role: string, request: Request) => {
-  const response = await makeApiRequest(`${role}/${authEndpoints.logout}`, {
+  const session = await userSession(request);
+  const { accessToken } = session.getUser();
+  const response = await makeApiRequest(`/${role}${authEndpoints.logout}`, {
     method: "POST",
     request,
+    body: {
+      accessToken,
+    },
   });
 
   if (!response.ok) {
@@ -293,3 +299,27 @@ export const mailLoginVerify = async (
   };
 };
 // end ------------------------------ mail login verify ------------------------------
+// start ------------------------------ me ------------------------------
+export const me = async (role: string, request: Request) => {
+  const session = await userSession(request);
+  const { accessToken } = session.getUser();
+  const response = await makeApiRequest(`/${role}${authEndpoints.me}`, {
+    method: "GET",
+    access_token: accessToken,
+    request,
+  });
+
+  if (!response.ok) {
+    return {
+      success: false,
+      message: "Failed to get user details",
+    };
+  }
+
+  return {
+    success: true,
+    message: "User details fetched successfully",
+    data: (await response.json()).data,
+  };
+};
+// end ------------------------------ me ------------------------------
