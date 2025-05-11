@@ -2,9 +2,12 @@ import { makeApiRequest } from "./common.server";
 import { SendOTPPayload, UserExistsPayload } from "~/types/user";
 import { ActionResult, ORIGIN } from "~/types/action-result";
 const authEndpoints = {
-  // common
+  // verification
   isExists: "/is-user-exists",
   verfiyMail: "/otp/verify-mail",
+
+  // validation
+  validateEmail: "/validate/acesstoken",
 };
 
 // start ------------------------------ isUserExists ------------------------------
@@ -87,3 +90,40 @@ export const sendMailOtp = async (
   return result;
 };
 // end ---------------------------- sendMailOtp ----------------------------
+// start ---------------------------- validateAccessToken ----------------------------
+export const validateAccessToken = async (
+  role: string,
+  accessToken: string,
+  request: Request
+): Promise<ActionResult<any>> => {
+  const response = await makeApiRequest(
+    `/${role}${authEndpoints.validateEmail}`,
+    {
+      method: "POST",
+      request,
+      body: {
+        channel: "web",
+        clientId: "validclient1",
+      },
+      access_token: accessToken,
+    }
+  );
+  if (!response.ok) {
+    return {
+      success: false,
+      origin: "email",
+      message: "Failed to validate access token",
+      data: null,
+    };
+  }
+
+  const data = await response.json();
+  console.log("data", data);
+  return {
+    success: true,
+    origin: "email" as ORIGIN,
+    message: "Access token validated successfully",
+    data: data.data,
+  };
+};
+// end ---------------------------- validateAccessToken ----------------------------

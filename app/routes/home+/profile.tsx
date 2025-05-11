@@ -20,7 +20,7 @@ import { me } from "@/services/auth.server";
 
 export async function loader({ request }: any) {
   const session = await userSession(request);
-  const isAuthenticated = session.isAuthenticated();
+  const isAuthenticated = await  session.isAuthenticated();
   console.log("---1---start home/profile.ts", isAuthenticated);
   if (!isAuthenticated) {
     return redirect("/auth/signin");
@@ -96,7 +96,10 @@ export default function Profile() {
               <Button disabled type="submit" className="w-full">
                 Save Changes
               </Button>
-              <Link to="/home" className="w-full text-center outline outline-1 outline-gray-300 rounded-md p-2 hover:bg-gray-900">
+              <Link
+                to="/home"
+                className="w-full text-center outline outline-1 outline-gray-300 rounded-md p-2 hover:bg-gray-900"
+              >
                 Home
               </Link>
             </Form>

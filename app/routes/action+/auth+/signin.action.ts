@@ -83,15 +83,16 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     const signinResult = await signin(parsedSigninPayload.data, request);
-
+    console.log("signinResult", signinResult);
     if (!signinResult.success) {
       return Response.json(signinResult, { status: 400 });
     }
 
     const session = await userSession(request);
     session.setUser(
-      signinResult?.data?.access_token,
-      signinResult?.data?.refresh_token
+      signinResult?.data?.data?.access_token,
+      signinResult?.data?.data?.refresh_token,
+      data.role as string
     );
 
     const result: ActionResultSuccess<User> = {
@@ -174,7 +175,8 @@ export async function action({ request }: ActionFunctionArgs) {
     const session = await userSession(request);
     session.setUser(
       mailLoginVerifyResult.data.access_token,
-      mailLoginVerifyResult.data.refresh_token
+      mailLoginVerifyResult.data.refresh_token,
+      data.role as string
     );
     console.log("session", session);
     const result: ActionResultSuccess<User> = {
