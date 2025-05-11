@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.4.0...v1.4.1) (2025-05-11)
+
+
+### Performance Improvements
+
+* **acess token validation updated:** acess token validation updated ([0e4070d](https://github.com/leocodeio-spectral/spectral-ui/commit/0e4070d504a4ea7654cfd17b0f5a85442c1ac4df))
+
 # [1.4.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.3.0...v1.4.0) (2025-05-10)
 
 
