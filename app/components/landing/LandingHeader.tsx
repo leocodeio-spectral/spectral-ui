@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { language } from "@/utils/language";
-
+import { ThemeColorToggle } from "@/components/theme-color-toggle";
 export default function LandingHeader() {
   const { i18n } = useTranslation();
   const submit = useSubmit();
@@ -48,6 +48,7 @@ export default function LandingHeader() {
         </Button>
       </div>
       <ModeToggle />
+      <ThemeColorToggle />
     </header>
   );
 }

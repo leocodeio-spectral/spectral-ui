@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { language } from "@/utils/language";
+import { ThemeColorToggle } from "@/components/theme-color-toggle";
 
 export default function CommonHeader() {
   const { i18n } = useTranslation();
@@ -108,6 +109,7 @@ export default function CommonHeader() {
           </SelectContent>
         </Select>
         <ModeToggle />
+        <ThemeColorToggle />
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="cursor-pointer">
             {/* <div className="flex items-center gap-2 rounded-md border border-input px-2"> */}

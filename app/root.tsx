@@ -5,7 +5,10 @@ import {
   useTheme,
 } from "remix-themes";
 
-import { themeSessionResolver } from "./services/sessions.server";
+import {
+  getThemeColorSession,
+  themeSessionResolver,
+} from "./services/sessions.server";
 import { getI18nSession } from "./services/sessions.server";
 
 import {
@@ -35,10 +38,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   //-------------------------- i18n---------------------------------------
   const i18nSession = await getI18nSession(request);
   let locale = i18nSession.getLocale();
+  //-------------------------- theme---------------------------------------
   const { getTheme } = await themeSessionResolver(request);
-  //-------------------------- i18n---------------------------------------
+  const { getThemeColor } = await getThemeColorSession(request);
   return {
     theme: getTheme(),
+    themeColor: getThemeColor(),
     locale,
   };
 }
@@ -47,7 +52,9 @@ export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>();
   return (
     <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
-      <App />
+      <ThemeDataProvider initialThemeColor={data.themeColor as ThemeColors}>
+        <App />
+      </ThemeDataProvider>
     </ThemeProvider>
   );
 }
@@ -56,6 +63,8 @@ import "./tailwind.css";
 
 //-------------------------- i18n---------------------------------------
 import { useTranslation } from "react-i18next";
+import { ThemeDataProvider } from "./context/theme-data-provider";
+import { ThemeColors } from "./types/theme-types";
 //-------------------------- i18n---------------------------------------
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -72,6 +81,7 @@ export const links: LinksFunction = () => [
 
 export function App() {
   const data = useLoaderData<typeof loader>();
+  console.log(data);
   //-------------------------- i18n---------------------------------------
   // This hook will change the i18n instance language to the current locale
   // detected by the loader, this way, when we do something to change the
