@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.5.0...v1.5.1) (2025-05-13)
+
+
+### Performance Improvements
+
+* **prof:** prof ([a7f8d3c](https://github.com/leocodeio-spectral/spectral-ui/commit/a7f8d3c99aa68770ff3ff2a007a0f8fd496dccdb))
+
 # [1.5.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.4.1...v1.5.0) (2025-05-11)
 
 
