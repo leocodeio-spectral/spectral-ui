@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.5.1...v1.5.2) (2025-05-13)
+
+
+### Performance Improvements
+
+* **multi color theme added:** multi color theme added ([57e435f](https://github.com/leocodeio-spectral/spectral-ui/commit/57e435f675e8a5bcefc4a05eb25ac5005dd8fb44))
+
 ## [1.5.1](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.5.0...v1.5.1) (2025-05-13)
 
 
