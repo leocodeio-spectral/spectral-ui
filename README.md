@@ -70,3 +70,12 @@ Spectral UI is a library of React components that are designed to be used with t
   - editor
     - /editor/requests (get)(manage) + /editor/requests/add (post) + /editor/requests/:requestId (delete)
 - editor
+
+
+---
+
+TODO
+
+- use profile pic usage
+- add forgot password
+- 

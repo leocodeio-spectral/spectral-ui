@@ -61,7 +61,7 @@ export default function Profile() {
             {/* Avatar Section */}
             <div className="flex flex-col items-center gap-4">
               <Avatar className="h-24 w-24">
-                <AvatarImage src="/logo.png" alt="@user" />
+                <AvatarImage src={user?.profilePicUrl} alt="@user" />
                 <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
               <Button disabled variant="secondary" size="sm">

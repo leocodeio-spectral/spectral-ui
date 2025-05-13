@@ -183,7 +183,8 @@ export async function action({ request }: ActionFunctionArgs) {
     const session = await userSession(request);
     session.setUser(
       signupResult?.data?.access_token,
-      signupResult?.data?.refresh_token
+      signupResult?.data?.refresh_token,
+      parsedSignupPayload.data.role
     );
     const result: ActionResultSuccess<User> = {
       success: true,
