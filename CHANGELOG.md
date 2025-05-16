@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.5.2...v1.6.0) (2025-05-16)
+
+
+### Features
+
+* **error pages impelmented more eff:** error pages impelmented more eff ([8a02a81](https://github.com/leocodeio-spectral/spectral-ui/commit/8a02a81860bf9a709d527cbb988b59001bdc3f2a))
+
 ## [1.5.2](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.5.1...v1.5.2) (2025-05-13)
 
 
