@@ -5,22 +5,52 @@
 // ensure the user gets the right status code and we can display a nicer error
 // message for them than the Remix and/or browser default.
 
-import { Link, useLoaderData, useLocation } from "@remix-run/react";
-import { GeneralErrorBoundary } from "~/components/error-boundary";
-import { Home, AlertCircle } from "lucide-react";
-import { json, LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { Button } from "~/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "~/components/ui/card";
+import { GeneralErrorBoundary } from "../components/error-boundary";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  throw new Response("Not found", { status: 404 });
-}
+// Import error components
+import NotFoundError from "../components/errors/404";
+import ServerError from "../components/errors/500";
+import ForbiddenError from "../components/errors/403";
+import UnauthorizedError from "../components/errors/401";
+import MaintenanceError from "../components/errors/503";
+
+import {
+  getI18nSession,
+  getThemeColorSession,
+  themeSessionResolver,
+} from "../services/sessions.server";
+import { ValidationError } from "../utils/data-inject-error";
+import { Theme } from "remix-themes";
+import { ThemeColors } from "../types/theme-types";
+import { LoaderFunctionArgs } from "@remix-run/node";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const { getTheme } = await themeSessionResolver(request);
+  const { getThemeColor } = await getThemeColorSession(request);
+  const i18nSession = await getI18nSession(request);
+  const locale = i18nSession.getLocale();
+  const theme = getTheme();
+  const themeColor = getThemeColor();
+  // console.log(theme, themeColor);
+  if (!theme || !themeColor) {
+    throw new ValidationError(
+      "Not found",
+      {},
+      locale,
+      theme as Theme,
+      themeColor as ThemeColors,
+      404
+    );
+  }
+  throw new ValidationError(
+    "Not found",
+    {},
+    locale,
+    theme as Theme,
+    themeColor as ThemeColors,
+    401
+  );
+};
 
 export default function NotFound() {
   // due to the loader, this component will never be rendered, but we'll return
@@ -29,41 +59,14 @@ export default function NotFound() {
 }
 
 export function ErrorBoundary() {
-  const location = useLocation();
   return (
     <GeneralErrorBoundary
       statusHandlers={{
-        404: () => (
-          <div className="container flex h-screen items-center justify-center">
-            <Card className="w-full max-w-md">
-              <CardHeader>
-                <Alert className="flex flex-col gap-2 p-6">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>404 Error</AlertTitle>
-                  <AlertDescription>Page not found</AlertDescription>
-                </Alert>
-              </CardHeader>
-
-              <CardContent className="flex flex-col gap-4">
-                <p className="text-muted-foreground">
-                  We couldn't find the page you're looking for:
-                </p>
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm py-6">
-                  {location.pathname}
-                </code>
-              </CardContent>
-
-              <CardFooter>
-                <Button asChild variant="default" className="w-full">
-                  <Link to="/" className="flex items-center gap-2">
-                    <Home className="h-4 w-4" />
-                    Back to Home
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-        ),
+        401: () => <UnauthorizedError />,
+        403: () => <ForbiddenError />,
+        404: () => <NotFoundError />,
+        500: () => <ServerError />,
+        503: () => <MaintenanceError />,
       }}
     />
   );
