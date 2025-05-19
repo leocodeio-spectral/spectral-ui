@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.0...v1.6.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* **minimal edits of ui:** minimal edits of ui ([e5b0a77](https://github.com/leocodeio-spectral/spectral-ui/commit/e5b0a77fcfec46f8ebfa5f37178f5392886f8be3))
+
 # [1.6.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.5.2...v1.6.0) (2025-05-16)
 
 
