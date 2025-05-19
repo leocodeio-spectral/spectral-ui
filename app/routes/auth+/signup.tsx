@@ -23,6 +23,8 @@ import { PROFILE_PICTURES } from "~/models/profilePictures";
 import { Loader2, Timer, UserCircle2Icon, UserRoundIcon } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { OTPInput } from "@/components/auth/otp-input";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export const action = signupAction;
 export const loader = signupLoader;
@@ -52,6 +54,36 @@ export default function Signup() {
 
   const navigate = useNavigate();
   const actionData = useActionData<ActionResult<User | SignupPayload>>();
+
+  const [passwordCriteria, setPasswordCriteria] = useState(true);
+  const passwordCriteriaFunction = [
+    {
+      name: "At least 8 characters",
+      func: (password: string) => password.length >= 8,
+    },
+    {
+      name: "At least one uppercase letter",
+      func: (password: string) => /[A-Z]/.test(password),
+    },
+    {
+      name: "At least one lowercase letter",
+      func: (password: string) => /[a-z]/.test(password),
+    },
+    {
+      name: "At least one number",
+      func: (password: string) => /[0-9]/.test(password),
+    },
+    {
+      name: "At least one special character",
+      func: (password: string) => /[!@#$%^&*]/.test(password),
+    },
+  ];
+
+  const allMet = () => {
+    return passwordCriteriaFunction.every((criteria) =>
+      criteria.func(password)
+    );
+  };
 
   useEffect(() => {
     console.log("actionData", actionData);
@@ -229,10 +261,10 @@ export default function Signup() {
 
                   {/* Password Fields */}
                   <div className="grid gap-2">
-                    <UserInput
+                    <Label htmlFor="password">Password</Label>
+                    <Input
                       id="password"
                       className="grid gap-2"
-                      label="Password"
                       type="password"
                       autoComplete="new-password"
                       placeholder="password"
@@ -241,8 +273,27 @@ export default function Signup() {
                         setPassword(e.target.value);
                         setError(null);
                       }}
+                      onFocus={() => {
+                        setPasswordCriteria(false);
+                      }}
+                      onBlur={() => {
+                        setPasswordCriteria(true);
+                      }}
                     />
                   </div>
+                  {!passwordCriteria && (
+                    <p className="text-sm text-muted-foreground">
+                      {passwordCriteriaFunction.map((criteria, index) => (
+                        <p
+                          key={index}
+                          className="text-sm text-muted-foreground"
+                        >
+                          {criteria.func(password) ? "✅" : "❌"}{" "}
+                          {criteria.name}
+                        </p>
+                      ))}
+                    </p>
+                  )}
                   <div className="grid gap-2">
                     <UserInput
                       id="confirmPassword"
@@ -271,6 +322,7 @@ export default function Signup() {
                     type="submit"
                     className="w-full"
                     disabled={
+                      !allMet() ||
                       password !== confirmPassword ||
                       !email ||
                       !password ||

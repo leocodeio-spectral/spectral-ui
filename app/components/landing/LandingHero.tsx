@@ -29,7 +29,7 @@ export const LandingHero = () => {
 
           <a
             rel="noreferrer noopener"
-            href="https://github.com/leocodeio/echofeedai"
+            href="https://github.com/orgs/leocodeio-spectral/repositories"
             target="_blank"
             className={`w-full md:w-1/3 py-5 px-4 text-center  dark:border-gray-700  hover:dark:bg-gray-700 border border border-gray-300 ${buttonVariants(
               {
