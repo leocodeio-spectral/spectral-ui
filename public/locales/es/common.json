@@ -2,6 +2,7 @@
   "greeting": "Hola",
   "welcome": "Bienvenido a Spectral",
   "hero": {
-    "description": "Habla con tu feedback"
+    "title": "Spectral",
+    "description": "Conecta tu podcast con el mundo"
   }
 }

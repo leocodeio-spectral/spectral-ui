@@ -1,6 +1,8 @@
 // import { UserData } from "~/model/user-data";
 // import { getUserInfo } from "./session.server";
 
+import { throw500Error } from "./error-validations.server";
+
 // Environment configuration with defaults
 const ENV = {
   BACKEND_API_URL: process.env.BACKEND_API_URL?.trim(),
@@ -61,7 +63,7 @@ export async function makeApiRequest<T, B = Record<string, unknown>>(
     params?: Record<string, string>;
     pathParams?: Record<string, string>;
   }
-): Promise<Response> {
+): Promise<Response | undefined> {
   console.log("--- request to backend begin ---");
   const { access_token, method, request, body, params, pathParams } = options;
 
@@ -88,7 +90,10 @@ export async function makeApiRequest<T, B = Record<string, unknown>>(
   }
   console.log("sending request with params", params);
   console.log("sending request with body", body);
-  console.log("sending request with headers", await createHeaders(access_token));
+  console.log(
+    "sending request with headers",
+    await createHeaders(access_token)
+  );
   console.log("--- request to backend end ---");
   try {
     const response = await fetch(fullUrl, {
@@ -105,6 +110,6 @@ export async function makeApiRequest<T, B = Record<string, unknown>>(
     return response;
   } catch (error) {
     console.error(`Error in API request to ${endpoint}:`, error);
-    throw error;
+    await throw500Error(request);
   }
 }

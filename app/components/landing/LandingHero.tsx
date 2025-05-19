@@ -12,11 +12,9 @@ export const LandingHero = () => {
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-              Catalyst
-            </span>{" "}
-            + EchoFeedAI
-            <br></br>
-          </h1>{" "}
+              {t("hero.title")}
+            </span>
+          </h1>
         </main>
 
         <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">

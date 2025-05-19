@@ -2,6 +2,7 @@
   "greeting": "Hello",
   "welcome": "Welcome to Spectral",
   "hero": {
-    "description": "Make your feedback talk"
+    "title": "Spectral",
+    "description": "Focus on creating, let us handle the rest"
   }
 }

@@ -2,6 +2,7 @@
   "greeting": "你好",
   "welcome": "欢迎来到Spectral",
   "hero": {
-    "description": "让你的反馈说话"
+    "title": "Spectral",
+    "description": "专注于创造，让我们处理剩下的"
   }
 }

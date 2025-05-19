@@ -10,10 +10,7 @@ export const CommonHero = () => {
     <section className="container grid  place-items-center py-20 md:py-32 gap-10 w-screen">
       <div className="text-center space-y-6 flex flex-col items-center justify-center w-full">
         <main className="text-5xl md:text-6xl font-bold">
-          <h1 className="inline">
-            EchoFeedAI
-            <br></br>
-          </h1>{" "}
+          <h1 className="inline">{t("hero.title")}</h1>
         </main>
 
         <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">

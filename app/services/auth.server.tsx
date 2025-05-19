@@ -14,6 +14,7 @@ import {
 import { makeApiRequest } from "./common.server";
 import { ActionResult, ActionResultError, ORIGIN } from "~/types/action-result";
 import { userSession } from "./sessions.server";
+import { throw500Error } from "./error-validations.server";
 
 const authEndpoints = {
   // common
@@ -49,10 +50,10 @@ export const signup = async (
 
   console.log("response of signup", response);
 
-  if (!response.ok) {
+  if (!response?.ok) {
     console.log("response", response);
     // 409
-    if (response.status === 409) {
+    if (response?.status === 409) {
       const result: ActionResult<SignupPayload> = {
         success: false,
         origin: "email",
@@ -62,17 +63,18 @@ export const signup = async (
       return result;
     }
     // 500
-    else if (response.status === 500) {
-      const result: ActionResult<SignupPayload> = {
-        success: false,
-        origin: "email",
-        message: "Failed to signup due to backend server error",
-        data: null,
-      };
-      return result;
+    else if (response?.status === 500) {
+      // const result: ActionResult<SignupPayload> = {
+      //   success: false,
+      //   origin: "email",
+      //   message: "Failed to signup due to backend server error",
+      //   data: null,
+      // };
+      // return result;
+      await throw500Error(request);
     }
     // 401
-    else if (response.status === 401 || response.status === 403) {
+    else if (response?.status === 401 || response?.status === 403) {
       const result: ActionResult<SignupPayload> = {
         success: false,
         origin: "email",
@@ -82,7 +84,7 @@ export const signup = async (
       return result;
     }
     // 400
-    else if (response.status === 400) {
+    else if (response?.status === 400) {
       const result: ActionResult<SignupPayload> = {
         success: false,
         origin: "email",
@@ -145,9 +147,9 @@ export const signin = async (
     },
   });
 
-  if (!response.ok) {
+  if (!response?.ok) {
     // 404
-    if (response.status === 404) {
+    if (response?.status === 404) {
       // user with email not found
       const result: ActionResult<SigninPayload> = {
         success: false,
@@ -158,7 +160,7 @@ export const signin = async (
       return result;
     }
     // 401
-    else if (response.status === 401) {
+    else if (response?.status === 401) {
       const result: ActionResult<SigninPayload> = {
         success: false,
         origin: "password",
@@ -168,7 +170,7 @@ export const signin = async (
       return result;
     }
     // 409
-    else if (response.status === 409) {
+    else if (response?.status === 409) {
       const result: ActionResult<SigninPayload> = {
         success: false,
         origin: "email",
@@ -177,13 +179,14 @@ export const signin = async (
       };
       return result;
     } else {
-      const result: ActionResult<SigninPayload> = {
-        success: false,
-        origin: "email",
-        message: "Failed to signin",
-        data: signinPayload,
-      };
-      return result;
+      // const result: ActionResult<SigninPayload> = {
+      //   success: false,
+      //   origin: "email",
+      //   message: "Failed to signin",
+      //   data: signinPayload,
+      // };
+      // return result;
+      await throw500Error(request);
     }
   }
 
@@ -193,7 +196,7 @@ export const signin = async (
     success: true,
     origin: "email",
     message: "Signin successful",
-    data: await response.json(),
+    data: await response?.json(),
   };
   return result;
 };
@@ -210,7 +213,7 @@ export const logout = async (role: string, request: Request) => {
     },
   });
 
-  if (!response.ok) {
+  if (!response?.ok) {
     return {
       success: false,
       message: "Failed to logout",
@@ -241,7 +244,7 @@ export const mailLogin = async (
     },
   });
 
-  if (!response.ok) {
+  if (!response?.ok) {
     return {
       success: false,
       origin: "email",
@@ -282,7 +285,7 @@ export const mailLoginVerify = async (
     }
   );
 
-  if (!response.ok) {
+  if (!response?.ok) {
     return {
       success: false,
       origin: "email",
@@ -295,7 +298,7 @@ export const mailLoginVerify = async (
     success: true,
     origin: "email",
     message: "Mail otp verified successfully",
-    data: await response.json(),
+    data: await response?.json(),
   };
 };
 // end ------------------------------ mail login verify ------------------------------
@@ -309,7 +312,7 @@ export const me = async (role: string, request: Request) => {
     request,
   });
 
-  if (!response.ok) {
+  if (!response?.ok) {
     return {
       success: false,
       message: "Failed to get user details",
@@ -319,7 +322,7 @@ export const me = async (role: string, request: Request) => {
   return {
     success: true,
     message: "User details fetched successfully",
-    data: (await response.json()).data,
+    data: (await response?.json()).data,
   };
 };
 // end ------------------------------ me ------------------------------
