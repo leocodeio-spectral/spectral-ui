@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.2...v1.6.3) (2025-05-19)
+
+
+### Performance Improvements
+
+* **updated code for dasboard will try to comple:** updated code for dasboard will try to comple ([80ac5e6](https://github.com/leocodeio-spectral/spectral-ui/commit/80ac5e6dd5e2f729e8d228e6d6913e60db2fa0d4))
+
 ## [1.6.2](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.1...v1.6.2) (2025-05-19)
 
 
