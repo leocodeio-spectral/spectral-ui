@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.1...v1.6.2) (2025-05-19)
+
+
+### Performance Improvements
+
+* **pssword criteria:** pssword criteria ([cc274b8](https://github.com/leocodeio-spectral/spectral-ui/commit/cc274b8b640a1bde600a1b08446f48ebea3787d0))
+
 ## [1.6.1](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.0...v1.6.1) (2025-05-19)
 
 
