@@ -2,6 +2,8 @@ import { createCookieSessionStorage } from "@remix-run/node";
 import { createThemeSessionResolver } from "remix-themes";
 import { jwtDecode } from "jwt-decode";
 import { validateAccessToken } from "./verfication.server";
+import { Persona } from "~/models/persona";
+import { accessMap } from "./access-map.server";
 
 // You can default to 'development' if process.env.NODE_ENV is not set
 const isProduction = process.env.NODE_ENV === "production";
@@ -88,6 +90,12 @@ export async function userSession(request: Request) {
   );
   return {
     getRole: () => session.get("role"),
+    canAccess: (route: string) => {
+      const role = session.get("role");
+      console.log("role", role);
+      console.log("accessMap", accessMap[role as Persona][route]);
+      return accessMap[role as Persona][route];
+    },
     getIsRole: (roles: string[]): boolean => {
       const user = session.get("user");
       if (user) {
