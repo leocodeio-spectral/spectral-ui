@@ -1,3 +1,10 @@
+## [1.6.5](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.4...v1.6.5) (2025-05-20)
+
+
+### Performance Improvements
+
+* **updated loader and dashboard:** updated loader and dashboard ([6bee211](https://github.com/leocodeio-spectral/spectral-ui/commit/6bee2118da38900d6e055a972628bc4ae4462ee8))
+
 ## [1.6.4](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.3...v1.6.4) (2025-05-20)
 
 
