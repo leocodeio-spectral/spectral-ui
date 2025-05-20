@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.3...v1.6.4) (2025-05-20)
+
+
+### Performance Improvements
+
+* **added sidebar:** added sidebar ([24f8078](https://github.com/leocodeio-spectral/spectral-ui/commit/24f8078dd7bdb4bde0de75a7c9a8176693ca2605))
+
 ## [1.6.3](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.2...v1.6.3) (2025-05-19)
 
 
