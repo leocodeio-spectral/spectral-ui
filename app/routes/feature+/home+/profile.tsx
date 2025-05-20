@@ -100,7 +100,7 @@ export default function Profile() {
                 Save Changes
               </Button>
               <Link
-                to="/home"
+                to="/feature/home"
                 className="w-full text-center outline outline-1 outline-gray-300 rounded-md p-2 hover:bg-gray-900"
               >
                 Home

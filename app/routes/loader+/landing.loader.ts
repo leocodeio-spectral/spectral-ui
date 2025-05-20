@@ -11,7 +11,7 @@ export async function loader({
   const isAuthenticated = await session.isAuthenticated();
   console.log("validity at landing.loader.ts", isAuthenticated);
   if (isAuthenticated) {
-    return redirect("/home");
+    return redirect("/feature/home");
   }
   return null;
 }

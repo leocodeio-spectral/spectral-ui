@@ -10,7 +10,7 @@ export async function loader({
   const session = await userSession(request);
   const isAuthenticated = await session.isAuthenticated();
   if (isAuthenticated) {
-    return redirect("/home");
+    return redirect("/feature/home");
   }
   return null;
 }
