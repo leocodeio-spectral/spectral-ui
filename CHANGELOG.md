@@ -1,3 +1,10 @@
+## [1.6.6](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.5...v1.6.6) (2025-05-22)
+
+
+### Performance Improvements
+
+* **updated codebase:** updated codebase ([e56c7df](https://github.com/leocodeio-spectral/spectral-ui/commit/e56c7df65cb59444e455923058581331737187ef))
+
 ## [1.6.5](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.4...v1.6.5) (2025-05-20)
 
 
