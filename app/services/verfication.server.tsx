@@ -26,8 +26,8 @@ export const isUserExists = async (
       },
     }
   );
-  if (!response.ok) {
-    if (response.status === 404) {
+  if (!response?.ok) {
+    if (response?.status === 404) {
       return {
         success: false,
         origin: userExistsPayload.type as ORIGIN,
@@ -45,7 +45,7 @@ export const isUserExists = async (
   }
 
   // return await response.json();
-  const data = await response.json();
+  const data = await response?.json();
   return {
     success: true,
     origin: userExistsPayload.type as ORIGIN,
@@ -70,7 +70,7 @@ export const sendMailOtp = async (
       },
     }
   );
-  if (!response.ok) {
+  if (!response?.ok) {
     return {
       success: false,
       origin: "email",
@@ -108,7 +108,7 @@ export const validateAccessToken = async (
       access_token: accessToken,
     }
   );
-  if (!response.ok) {
+  if (!response?.ok) {
     return {
       success: false,
       origin: "email",
@@ -117,7 +117,7 @@ export const validateAccessToken = async (
     };
   }
 
-  const data = await response.json();
+  const data = await response?.json();
   console.log("data", data);
   return {
     success: true,

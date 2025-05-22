@@ -10,7 +10,7 @@ export const accessMap: AccessMap = {
   [Persona.CREATOR]: {
     "": true,
     "/home": true,
-    // "/feature/dashboard": true,
+    "/feature/dashboard": true,
   },
   [Persona.EDITOR]: {
     "": true,

@@ -7,7 +7,7 @@ import { Link } from "@remix-run/react";
 export const CommonHero = () => {
   const { t } = useTranslation("common");
   return (
-    <section className="container grid  place-items-center py-20 md:py-32 gap-10 w-screen">
+    <section className="container grid  place-items-center py-20 md:py-32 gap-10 w-full">
       <div className="text-center space-y-6 flex flex-col items-center justify-center w-full">
         <main className="text-5xl md:text-6xl font-bold">
           <h1 className="inline">
