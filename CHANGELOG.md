@@ -1,3 +1,10 @@
+## [1.6.7](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.6...v1.6.7) (2025-05-23)
+
+
+### Performance Improvements
+
+* **added common pool:** will complete flows ([ef30340](https://github.com/leocodeio-spectral/spectral-ui/commit/ef30340c584f93149a556de9f00250f18ce19f27))
+
 ## [1.6.6](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.5...v1.6.6) (2025-05-22)
 
 
