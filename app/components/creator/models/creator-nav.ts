@@ -10,5 +10,5 @@ export const CreatorNavLinks = [
   { name: "Home", to: "/feature/home", icon: HomeIcon },
   { name: "Dashboard", to: "/feature/dashboard", icon: DashboardIcon },
   { name: "Accounts", to: "/feature/accounts", icon: BoxIcon },
-  { name: "Editors", to: "/feature/editor", icon: UserIcon },
+  { name: "Editors", to: "/feature/editors", icon: UserIcon },
 ];

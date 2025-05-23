@@ -15,6 +15,7 @@ export interface CreatorDashboardProps {}
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChartAreaInteractive } from "~/components/common/charts/CreatorChart";
+import { Link } from "@remix-run/react";
 
 export const CreatorDashboard = ({}: CreatorDashboardProps) => {
   return (
@@ -30,7 +31,7 @@ export const CreatorDashboard = ({}: CreatorDashboardProps) => {
               Manage your connected social and content platforms.
             </p>
             <Button variant="default" className="w-full">
-              View Accounts
+              <Link to="/feature/accounts">View Accounts</Link>
             </Button>
           </CardContent>
         </Card>
@@ -45,7 +46,7 @@ export const CreatorDashboard = ({}: CreatorDashboardProps) => {
               Invite or manage users who help edit your content.
             </p>
             <Button variant="default" className="w-full">
-              Manage Editors
+              <Link to="/feature/editors">Manage Editors</Link>
             </Button>
           </CardContent>
         </Card>
