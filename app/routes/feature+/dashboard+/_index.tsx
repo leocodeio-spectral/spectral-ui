@@ -5,13 +5,14 @@ import { CommonSubHeader } from "~/components/common/CommonSubHeader";
 
 import { loader as dashboardLoader } from "@/routes/loader+/feature+/dashboard+/dashboard.loader";
 import { CreatorDashboard } from "~/components/creator/routes/dashboard/creator-dashboard";
+import { EditorDashboard } from "~/components/editor/routes/dashboard/editor-dashboard";
 export const loader = dashboardLoader;
 
 export const renderDashboard = ({ role }: { role: Persona }) => {
   if (role === Persona.CREATOR) {
     return <CreatorDashboard />;
   } else if (role === Persona.EDITOR) {
-    return <div>Editor</div>;
+    return <EditorDashboard />;
   }
   return <div>Admin</div>;
 };

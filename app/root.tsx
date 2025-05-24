@@ -19,8 +19,8 @@ import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
 // styles
 // import { styles } from "@./shadcn";
+// import stylesheet from "./tailwind.css?url"; // Adjust path if necessary
 import "./tailwind.css";
-
 // themes
 import {
   PreventFlashOnWrongTheme,
@@ -42,6 +42,7 @@ import ServerError from "./components/errors/500";
 // i18n
 import { useChangeLanguage } from "remix-i18next/react";
 import { useTranslation } from "react-i18next";
+import { Toaster } from "@/components/ui/toaster";
 export let handle = {
   // In the handle export, we can add a i18n key with namespaces our route
   // will need to load. This key can be a single string or an array of strings.
@@ -67,7 +68,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 // links
 export const links: LinksFunction = () => [
-  // { rel: "stylesheet", href: styles },
+  // { rel: "stylesheet", href: stylesheet },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -104,10 +105,11 @@ export function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
-        <Links />
       </head>
       <body>
+        <Links />
         <Outlet />
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -157,9 +159,9 @@ export function ErrorBoundarySkeleton({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
-        <Links />
       </head>
       <body>
+        <Links />
         <GeneralErrorBoundary
           statusHandlers={{
             401: () => <UnauthorizedError />,

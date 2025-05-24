@@ -6,6 +6,7 @@ import { CommonSubHeader } from "~/components/common/CommonSubHeader";
 import { loader as dashboardLoader } from "@/routes/loader+/feature+/dashboard+/dashboard.loader";
 import { useLoaderData } from "@remix-run/react";
 import CreatorEditor from "~/components/creator/routes/editors/creator-editor";
+import EditorCreator from "~/components/editor/routes/editors/editor-creator";
 export const loader = dashboardLoader;
 
 export const renderEditors = ({ role }: { role: Persona }) => {
@@ -13,7 +14,7 @@ export const renderEditors = ({ role }: { role: Persona }) => {
     case Persona.CREATOR:
       return <CreatorEditor />;
     case Persona.EDITOR:
-      return <div>Editor</div>;
+      return <EditorCreator />;
     default:
       return <div>Admin</div>;
   }

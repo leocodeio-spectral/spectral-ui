@@ -1,18 +1,36 @@
 import { Persona } from "~/models/persona";
 import { CommonSubHeader } from "~/components/common/CommonSubHeader";
 import EditorAccounts from "~/components/editor/routes/accounts/editor-accounts";
-import CreatorAccounts from "~/components/creator/routes/accounts/creator-accounts";
+import CreatorAccounts, {
+  Account,
+} from "~/components/creator/routes/accounts/creator-accounts";
 
 // loader
 
-import { useLoaderData } from "@remix-run/react";
-import { loader as dashboardLoader } from "@/routes/loader+/feature+/dashboard+/dashboard.loader";
-export const loader = dashboardLoader;
+import { useLoaderData, useSubmit } from "@remix-run/react";
+import { loader as accountsLoader } from "~/routes/loader+/feature+/accounts+/accounts.loader";
+export const loader = accountsLoader;
 
 export const renderAccounts = ({ role }: { role: Persona }) => {
+  const data = useLoaderData<typeof loader>();
+  
   switch (role) {
     case Persona.CREATOR:
-      return <CreatorAccounts />;
+      const { linkedAccounts } = data;
+      const submit = useSubmit();
+      const onUnlink = (accountId: string) => {
+        submit({ accountId }, { method: "post", action: "/feature/accounts" });
+      };
+      const onLinkNew = () => {
+        submit({}, { method: "post", action: "/feature/accounts" });
+      };
+      return (
+        <CreatorAccounts
+          accounts={linkedAccounts}
+          onUnlink={onUnlink}
+          onLinkNew={onLinkNew}
+        />
+      );
     case Persona.EDITOR:
       return <EditorAccounts />;
     default:

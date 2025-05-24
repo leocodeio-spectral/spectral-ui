@@ -9,9 +9,9 @@ const getData = async (request: Request) => {
   const { getTheme } = await themeSessionResolver(request);
   const { getThemeColor } = await getThemeColorSession(request);
   const i18nSession = await getI18nSession(request);
-  const locale = i18nSession.getLocale();
-  const theme = getTheme();
-  const themeColor = getThemeColor();
+  const locale = i18nSession.getLocale() ?? "en";
+  const theme = getTheme() ? getTheme() : "light";
+  const themeColor = getThemeColor() ? getThemeColor() : "light";
   return { locale, theme, themeColor };
 };
 // 401

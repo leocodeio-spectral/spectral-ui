@@ -11,6 +11,7 @@ export const accessMap: AccessMap = {
     "": true,
     "/home": true,
     "/feature/dashboard": true,
+    "/feature/accounts": false,
   },
   [Persona.EDITOR]: {
     "": true,
