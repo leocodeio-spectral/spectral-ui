@@ -1,3 +1,10 @@
+## [1.6.9](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.8...v1.6.9) (2025-05-24)
+
+
+### Performance Improvements
+
+* **udpated code for creator:** udpated code for creator ([246ce02](https://github.com/leocodeio-spectral/spectral-ui/commit/246ce02750b70992eee5821b4267c1d0994a36a0))
+
 ## [1.6.8](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.7...v1.6.8) (2025-05-23)
 
 
