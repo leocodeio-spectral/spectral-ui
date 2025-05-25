@@ -12,10 +12,10 @@ const getRoleBasedData = async (request: Request) => {
 
   switch (role) {
     case Persona.CREATOR:
-      const linkedAccounts = await getLinkedAccounts(request);
+      const linkedAccounts = await getLinkedAccounts(request, session.getCurrentUserId());
       return {
         role,
-        linkedAccounts, 
+        linkedAccounts,   
       };
     case Persona.EDITOR:
       return {
@@ -44,6 +44,5 @@ export async function loader({ request }: LoaderFunctionArgs): Promise<any> {
   }
 
   const data = await getRoleBasedData(request);
-  console.log("roleData", data);
   return data;
 }

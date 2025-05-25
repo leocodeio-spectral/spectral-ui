@@ -106,6 +106,7 @@ export async function makeApiRequest<T, B = Record<string, unknown>>(
     console.log("debug log 3 - makeApiRequest", response.status);
     console.log("debug log 4 - makeApiRequest", response.statusText);
     console.log("debug log 5 - makeApiRequest", response.body);
+    console.log("debug log 6 - makeApiRequest", await response.clone().json());
     console.log("--- response from backend end ---");
     return response;
   } catch (error) {

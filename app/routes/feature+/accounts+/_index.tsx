@@ -13,13 +13,16 @@ export const loader = accountsLoader;
 
 export const renderAccounts = ({ role }: { role: Persona }) => {
   const data = useLoaderData<typeof loader>();
-  
+
   switch (role) {
     case Persona.CREATOR:
       const { linkedAccounts } = data;
       const submit = useSubmit();
       const onUnlink = (accountId: string) => {
-        submit({ accountId }, { method: "post", action: "/action/creator/accounts/unlink" });
+        submit(
+          { accountId },
+          { method: "post", action: "/action/creator/accounts/unlink" }
+        );
       };
       const onLinkNew = () => {
         submit({}, { method: "post", action: "/feature/accounts/getUrlLink" });

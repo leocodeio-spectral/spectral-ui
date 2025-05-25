@@ -1,23 +1,32 @@
 import { makeApiRequest } from "../common.server";
 
 const creatorEndpoints = {
-  getLinkedAccounts: { url: "/accounts/linked", method: "GET" },
+  getLinkedAccounts: { url: "/youtube/creator", method: "GET" },
   getLinkAccountUrl: { url: "/youtube/api/auth", method: "GET" },
   linkAccount: { url: "/youtube/api/oauth2callback", method: "POST" },
   unlinkAccount: { url: "/accounts/unlink", method: "POST" },
 };
 
 // start ------------------------------ getLinkedAccounts ------------------------------
-export const getLinkedAccounts = async (request: Request) => {
-  // const response = await makeApiRequest<any, any>(
-  //   creatorEndpoints.getLinkedAccounts.url,
-  //   {
-  //     method: creatorEndpoints.getLinkedAccounts.method,
-  //     request: request,
-  //   }
-  // );
-  // return response?.json();
-  return [{ id: "1" }, { id: "2" }];
+export const getLinkedAccounts = async (
+  request: Request,
+  creatorId: string
+) => {
+  const response = await makeApiRequest<any, any>(
+    creatorEndpoints.getLinkedAccounts.url,
+    {
+      method: creatorEndpoints.getLinkedAccounts.method,
+      request: request,
+      params: {
+        creatorId: creatorId,
+        status: "active",
+      },
+    }
+  );
+  return await response?.json().then((data) => {
+    // console.log("data", data);
+    return data.data;
+  });
 };
 // end ------------------------------ getLinkedAccounts ------------------------------
 // start ------------------------------ getLinkAccountUrl ------------------------------
