@@ -5,14 +5,17 @@
  * button to link new account
  */
 
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export interface Account {
   id: string;
-  name: string;
-  platform: string;
 }
 
 export interface CreatorAccountsProps {
@@ -29,21 +32,12 @@ export default function CreatorAccounts({
   return (
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">Linked Accounts</h2>
-      <Card className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {accounts.map((account) => (
+      <Card className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border-none bg-transparent">
+        {accounts?.map((account) => (
           <Card key={account.id}>
             <CardContent className="p-4 flex flex-col justify-between h-full">
-              <div>
-                <h3 className="text-lg font-medium">{account.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {account.platform}
-                </p>
-              </div>
-              <Button
-                variant="destructive"
-                className="mt-4"
-                onClick={() => onUnlink(account.id)}
-              >
+              <p>{account.id}</p>
+              <Button className="mt-4" onClick={() => onUnlink(account.id)}>
                 Unlink
               </Button>
             </CardContent>
@@ -52,13 +46,18 @@ export default function CreatorAccounts({
       </Card>
       {/* Add a new account card */}
       <div className="mt-6 flex justify-center">
-        <Card className="w-full max-w-md text-center p-6 shadow-lg border-dashed border-2 border-muted">
-          <CardContent className="flex flex-col items-center gap-4">
-            <Plus className="w-8 h-8 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground">
-              Add a new platform or service
-            </p>
-            <Button variant="outline" onClick={onLinkNew}>
+        <Card className="w-full max-w-md">
+          <CardContent className="p-6 flex flex-col items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+              <Plus className="w-6 h-6 text-muted-foreground" />
+            </div>
+            <div className="space-y-2 text-center">
+              <CardTitle>Link Account</CardTitle>
+              <CardDescription>
+                Connect a new account to enhance your experience
+              </CardDescription>
+            </div>
+            <Button variant="default" onClick={onLinkNew} className="mt-2">
               Link New Account
             </Button>
           </CardContent>

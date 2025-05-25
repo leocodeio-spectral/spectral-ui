@@ -10,6 +10,7 @@
         "ci",
         "docs",
         "feat",
+        "checkpoint",
         "fix",
         "perf",
         "refactor",

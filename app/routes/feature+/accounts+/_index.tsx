@@ -19,10 +19,10 @@ export const renderAccounts = ({ role }: { role: Persona }) => {
       const { linkedAccounts } = data;
       const submit = useSubmit();
       const onUnlink = (accountId: string) => {
-        submit({ accountId }, { method: "post", action: "/feature/accounts" });
+        submit({ accountId }, { method: "post", action: "/action/creator/accounts/unlink" });
       };
       const onLinkNew = () => {
-        submit({}, { method: "post", action: "/feature/accounts" });
+        submit({}, { method: "post", action: "/feature/accounts/getUrlLink" });
       };
       return (
         <CreatorAccounts

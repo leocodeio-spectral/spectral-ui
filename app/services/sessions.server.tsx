@@ -137,6 +137,14 @@ export async function userSession(request: Request) {
         role: session.get("role"),
       };
     },
+    getCurrentUserId: () => {
+      const accessToken = session.get("accessToken");
+
+      const decoded = jwtDecode(accessToken) as { sub: string };
+      // console.log("decoded", decoded);
+      const id = decoded.sub;
+      return id;
+    },
     getAcessAndRefreshToken: () => {
       return {
         accessToken: session.get("accessToken"),

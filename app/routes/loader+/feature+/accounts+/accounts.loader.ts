@@ -15,7 +15,7 @@ const getRoleBasedData = async (request: Request) => {
       const linkedAccounts = await getLinkedAccounts(request);
       return {
         role,
-        linkedAccounts,
+        linkedAccounts, 
       };
     case Persona.EDITOR:
       return {
