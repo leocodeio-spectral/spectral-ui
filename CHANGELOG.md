@@ -1,3 +1,5 @@
+# [1.8.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.7.0...v1.8.0) (2025-05-25)
+
 # [1.7.0](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.9...v1.7.0) (2025-05-25)
 
 ## [1.6.9](https://github.com/leocodeio-spectral/spectral-ui/compare/v1.6.8...v1.6.9) (2025-05-24)
