@@ -21,7 +21,7 @@ export const renderAccounts = ({ role }: { role: Persona }) => {
       const onUnlink = (accountId: string) => {
         submit(
           { accountId },
-          { method: "post", action: "/action/creator/accounts/unlink" }
+          { method: "post", action: "/feature/accounts/unlink" }
         );
       };
       const onLinkNew = () => {

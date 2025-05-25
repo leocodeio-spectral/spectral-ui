@@ -16,6 +16,7 @@ import { Plus } from "lucide-react";
 
 export interface Account {
   id: string;
+  email: string;
 }
 
 export interface CreatorAccountsProps {
@@ -36,7 +37,7 @@ export default function CreatorAccounts({
         {accounts?.map((account) => (
           <Card key={account.id}>
             <CardContent className="p-4 flex flex-col justify-between h-full">
-              <p>{account.id}</p>
+              <p>{account.email}</p>
               <Button className="mt-4" onClick={() => onUnlink(account.id)}>
                 Unlink
               </Button>

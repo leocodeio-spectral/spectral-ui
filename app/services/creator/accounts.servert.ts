@@ -4,7 +4,7 @@ const creatorEndpoints = {
   getLinkedAccounts: { url: "/youtube/creator", method: "GET" },
   getLinkAccountUrl: { url: "/youtube/api/auth", method: "GET" },
   linkAccount: { url: "/youtube/api/oauth2callback", method: "POST" },
-  unlinkAccount: { url: "/accounts/unlink", method: "POST" },
+  unlinkAccount: { url: "/youtube/creator", method: "PUT" },
 };
 
 // start ------------------------------ getLinkedAccounts ------------------------------
@@ -58,12 +58,18 @@ export const linkAccount = async (
 };
 // end ------------------------------ linkAccount ------------------------------
 // start ------------------------------ unlinkAccount ------------------------------
-export const unlinkAccount = async (request: Request) => {
+export const unlinkAccount = async (request: Request, accountId: string) => {
   const response = await makeApiRequest<any, any>(
     creatorEndpoints.unlinkAccount.url,
     {
       method: creatorEndpoints.unlinkAccount.method,
       request: request,
+      params: {
+        id: accountId,
+      },
+      body: {
+        status: "inactive",
+      },
     }
   );
   return response?.json();
