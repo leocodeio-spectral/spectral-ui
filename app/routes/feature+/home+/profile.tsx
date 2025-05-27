@@ -99,12 +99,9 @@ export default function Profile() {
               <Button disabled type="submit" className="w-full">
                 Save Changes
               </Button>
-              <Link
-                to="/feature/home"
-                className="w-full text-center outline outline-1 outline-gray-300 rounded-md p-2 hover:bg-gray-900"
-              >
-                Home
-              </Link>
+              <Button type="button">
+                <Link to="/feature/home">Home</Link>
+              </Button>
             </Form>
           </div>
         </CardContent>

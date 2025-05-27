@@ -5,14 +5,19 @@ import { CommonSubHeader } from "~/components/common/CommonSubHeader";
 
 import { loader as dashboardLoader } from "@/routes/loader+/feature+/dashboard+/dashboard.loader";
 import { useLoaderData } from "@remix-run/react";
-import CreatorEditor from "~/components/creator/routes/editors/creator-editor";
+import { CreatorEditor } from "~/components/creator/routes/editors/creator-editor";
 import EditorCreator from "~/components/editor/routes/editors/editor-creator";
 export const loader = dashboardLoader;
 
 export const renderEditors = ({ role }: { role: Persona }) => {
   switch (role) {
     case Persona.CREATOR:
-      return <CreatorEditor />;
+      return (
+        <CreatorEditor
+          onSearch={() => Promise.resolve([])}
+          onConnectClick={() => {}}
+        />
+      );
     case Persona.EDITOR:
       return <EditorCreator />;
     default:

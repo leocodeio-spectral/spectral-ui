@@ -33,7 +33,7 @@ export default function CreatorAccounts({
   return (
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">Linked Accounts</h2>
-      <Card className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border-none bg-transparent">
+      <Card className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border-0 bg-transparent shadow-none">
         {accounts?.map((account) => (
           <Card key={account.id}>
             <CardContent className="p-4 flex flex-col justify-between h-full">

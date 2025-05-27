@@ -42,7 +42,7 @@ import ServerError from "./components/errors/500";
 // i18n
 import { useChangeLanguage } from "remix-i18next/react";
 import { useTranslation } from "react-i18next";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 export let handle = {
   // In the handle export, we can add a i18n key with namespaces our route
   // will need to load. This key can be a single string or an array of strings.
