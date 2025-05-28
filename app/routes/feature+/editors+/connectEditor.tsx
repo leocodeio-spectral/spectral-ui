@@ -1,4 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/node";
+import { connectEditor } from "~/services/creator/editors.server";
 
 export default function ConnectEditor() {
   return <div>ConnectEditor</div>;
@@ -11,6 +12,7 @@ export const loader = () => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const editorId = formData.get("editorId");
-  console.log(editorId);
-  return null;
+
+  const response = await connectEditor(request, editorId as string);
+  return response;
 };

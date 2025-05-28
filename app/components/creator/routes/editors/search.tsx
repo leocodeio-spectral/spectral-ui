@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/hooks/use-toast";
 import { ActionResult } from "~/types/action-result";
@@ -27,11 +26,11 @@ export function EmailSearch({}: EmailSearchProps) {
   const searchFetcher = useFetcher();
   const connectFetcher = useFetcher();
 
-  const isLoading = searchFetcher.state !== "idle";
+  const isSearchLoading = searchFetcher.state !== "idle";
+  const isConnectLoading = connectFetcher.state !== "idle";
 
+  // handle search editor
   useEffect(() => {
-    console.log("searchFetcher.data", searchFetcher.data);
-    console.log("searchFetcher.state", searchFetcher.state);
     if (searchFetcher.state === "idle" && searchFetcher.data) {
       const response = searchFetcher.data as ActionResult<any>;
       if (response.success) {
@@ -40,8 +39,14 @@ export function EmailSearch({}: EmailSearchProps) {
           description: response.message,
           variant: "default",
         });
-        console.log("response.data", response.data.data);
         setEditor(response.data.data as Editor);
+        setConnectStatus(
+          response.data.data?.status === "ACTIVE"
+            ? "Already Connected"
+            : response.data.data?.status === "PENDING"
+            ? "Pending"
+            : "Connect"
+        );
       } else {
         toast({
           title: "Error",
@@ -72,15 +77,15 @@ export function EmailSearch({}: EmailSearchProps) {
     );
   };
 
+  // handle connect editor
   useEffect(() => {
-    console.log("connectFetcher.data", connectFetcher.data);
-    console.log("connectFetcher.state", connectFetcher.state);
     if (connectFetcher.state === "idle" && connectFetcher.data) {
       const response = connectFetcher.data as ActionResult<any>;
       if (response.success) {
+        setConnectStatus("Pending");
         toast({
           title: "Success",
-          description: "Successfully connected with editor",
+          description: "Successfully requested to connect with editor",
           variant: "default",
         });
       } else {
@@ -98,7 +103,7 @@ export function EmailSearch({}: EmailSearchProps) {
       { editorId },
       {
         method: "post",
-        action: "/feature/editors/search",
+        action: "/feature/editors/connectEditor",
       }
     );
   };
@@ -107,6 +112,8 @@ export function EmailSearch({}: EmailSearchProps) {
   const isValidEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
+
+  const [connectStatus, setConnectStatus] = useState<string>("Connect");
 
   return (
     <div className="w-full max-w-md mx-auto space-y-4 my-2">
@@ -121,9 +128,9 @@ export function EmailSearch({}: EmailSearchProps) {
         />
         <Button
           onClick={handleSearch}
-          disabled={isLoading || !isValidEmail(email)}
+          disabled={isSearchLoading || !isValidEmail(email)}
         >
-          {isLoading ? "Searching..." : "Search"}
+          {isSearchLoading ? "Searching..." : "Search"}
         </Button>
       </div>
 
@@ -151,12 +158,12 @@ export function EmailSearch({}: EmailSearchProps) {
                     <Button
                       size="sm"
                       variant={
-                        editor.status === "connected" ? "default" : "outline"
+                        editor.status === "active" ? "default" : "outline"
                       }
                       onClick={() => handleEditorConnect(editor.editorId)}
-                      disabled={editor.status === "connected"}
+                      disabled={editor.status === "active" || isConnectLoading}
                     >
-                      {editor.status === "connected" ? "Connected" : "Connect"}
+                      {connectStatus}
                     </Button>
                   </div>
                 </div>
