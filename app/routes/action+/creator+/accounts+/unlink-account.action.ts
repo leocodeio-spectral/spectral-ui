@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { unlinkAccount } from "~/services/creator/accounts.servert";
+import { unlinkAccount } from "~/services/creator/accounts.server";
 
 export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData();

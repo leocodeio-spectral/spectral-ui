@@ -14,8 +14,8 @@ export const renderEditors = ({ role }: { role: Persona }) => {
     case Persona.CREATOR:
       return (
         <CreatorEditor
-          onSearch={() => Promise.resolve([])}
-          onConnectClick={() => {}}
+          editors={[]}
+          onUnlink={() => {}}
         />
       );
     case Persona.EDITOR:

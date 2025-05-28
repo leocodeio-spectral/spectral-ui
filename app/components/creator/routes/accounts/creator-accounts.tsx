@@ -12,7 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
+import { Link } from "@remix-run/react";
+import { Label } from "@/components/ui/label";
 
 export interface Account {
   id: string;
@@ -32,7 +34,16 @@ export default function CreatorAccounts({
 }: CreatorAccountsProps) {
   return (
     <div className="p-4">
+      {/* Back Button */}
       <h2 className="text-2xl font-semibold mb-4">Linked Accounts</h2>
+      <Button variant="ghost" className="my-2">
+        <Link to="/feature/dashboard" className="flex items-center space-x-2">
+          <ArrowLeft className="h-5 w-5 text-muted-foreground" />
+          <Label className="text-base font-medium">Back</Label>
+        </Link>
+      </Button>
+
+
       <Card className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border-0 bg-transparent shadow-none">
         {accounts?.map((account) => (
           <Card key={account.id}>

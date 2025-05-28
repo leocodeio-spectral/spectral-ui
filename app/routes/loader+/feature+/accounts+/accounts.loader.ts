@@ -2,7 +2,7 @@ import { type LoaderFunctionArgs } from "@remix-run/node";
 import { userSession } from "../../../../services/sessions.server";
 import { throw404Error } from "../../../../services/error-validations.server";
 import { Persona } from "../../../../models/persona";
-import { getLinkedAccounts } from "~/services/creator/accounts.servert";
+import { getLinkedAccounts } from "~/services/creator/accounts.server";
 
 export const ROUTE_PATH = "/feature/accounts" as const;
 
@@ -12,10 +12,13 @@ const getRoleBasedData = async (request: Request) => {
 
   switch (role) {
     case Persona.CREATOR:
-      const linkedAccounts = await getLinkedAccounts(request, session.getCurrentUserId());
+      const linkedAccounts = await getLinkedAccounts(
+        request,
+        session.getCurrentUserId()
+      );
       return {
         role,
-        linkedAccounts,   
+        linkedAccounts,
       };
     case Persona.EDITOR:
       return {

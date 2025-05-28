@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { getLinkAccountUrl } from "~/services/creator/accounts.servert";
+import { getLinkAccountUrl } from "~/services/creator/accounts.server";
 
 export const action = async ({ request }: { request: Request }) => {
   const data = await getLinkAccountUrl(request);

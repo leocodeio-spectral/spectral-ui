@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { linkAccount } from "~/services/creator/accounts.servert";
+import { linkAccount } from "~/services/creator/accounts.server";
 import { userSession } from "~/services/sessions.server";
 
 export const loader = async ({ request }: { request: Request }) => {
